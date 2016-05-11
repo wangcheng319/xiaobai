@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 import com.xiaobai.myapplication.R;
 
 /**
- * 发现
+ * 新增
  */
-public class FindFragment extends Fragment {
+public class AddFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -24,7 +24,7 @@ public class FindFragment extends Fragment {
     private String mParam2;
 
 
-    public FindFragment() {
+    public AddFragment() {
         // Required empty public constructor
     }
 
@@ -34,11 +34,11 @@ public class FindFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment FindFragment.
+     * @return A new instance of fragment AddFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FindFragment newInstance(String param1, String param2) {
-        FindFragment fragment = new FindFragment();
+    public static AddFragment newInstance(String param1, String param2) {
+        AddFragment fragment = new AddFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -59,8 +59,7 @@ public class FindFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_find, container, false);
+        return inflater.inflate(R.layout.fragment_add, container, false);
     }
-
 
 }
