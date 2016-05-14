@@ -3,11 +3,15 @@ package com.xiaobai.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.xiaobai.adapter.FindAdapter;
 import com.xiaobai.myapplication.R;
@@ -67,17 +71,23 @@ public class FindFragment extends Fragment {
     private void initView() {
 
         initData();
-        mList =(RecyclerView)rootView.findViewById(R.id.find_list);
+        mList = (RecyclerView) rootView.findViewById(R.id.find_list);
         mList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mList.setAdapter(findAdapter = new FindAdapter(getActivity(),mDatas));
+        mList.setAdapter(findAdapter = new FindAdapter(getActivity(), mDatas));
+
+        findAdapter.setmOnItemClickListener(new FindAdapter.OnRecyclerViewItemClickListener() {
+            @Override
+            public void onItemClick(View view, String data) {
+                Toast.makeText(getActivity(),data,Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
 
-    protected void initData()
-    {
+    protected void initData() {
         mDatas = new ArrayList<String>();
-        for (int i = 'A'; i < 'z'; i++)
-        {
+        for (int i = 'A'; i < 'z'; i++) {
             mDatas.add("" + (char) i);
         }
     }
