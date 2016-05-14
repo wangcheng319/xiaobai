@@ -5,8 +5,10 @@
     android:gravity="center">
 
     <ImageView
+        android:id="@+id/find_item_photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitXY"
         android:src="@mipmap/ic_launcher"/>
 
     <TextView

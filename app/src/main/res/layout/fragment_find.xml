@@ -4,12 +4,6 @@
     android:layout_height="match_parent"
     tools:context="com.xiaobai.fragment.FindFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="find" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/find_list"
