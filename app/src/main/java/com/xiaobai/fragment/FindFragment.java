@@ -22,6 +22,7 @@ import com.squareup.okhttp.Response;
 import com.xiaobai.adapter.FindAdapter;
 import com.xiaobai.adapter.FindAdapter1;
 import com.xiaobai.dto.HtoDto;
+import com.xiaobai.listview.XListView;
 import com.xiaobai.myapplication.R;
 
 import org.json.JSONException;
@@ -48,6 +49,8 @@ public class FindFragment extends Fragment {
     private FindAdapter findAdapter;
     private List<HtoDto> mDatas = new ArrayList<HtoDto>();
     public String url = "http://janhuu.imwork.net:30319/qianyuApp/requestservices.action";
+
+    private XListView listView;
 
 
     public FindFragment() {
@@ -146,11 +149,8 @@ public class FindFragment extends Fragment {
 
 
     private void initView() {
+        listView = (XListView) rootView.findViewById(R.id.find_list);
 
-        mList = (RecyclerView) rootView.findViewById(R.id.find_list);
-        mList.setLayoutManager(new LinearLayoutManager(getActivity()));
-        findAdapter = new FindAdapter(getActivity(), mDatas);
-        mList.setAdapter(findAdapter);
     }
 
 }

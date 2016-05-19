@@ -15,10 +15,6 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        OkHttpClient client =
-                OkHttpUtils.getInstance().getOkHttpClient();
-
-        Request request = new Request.Builder().addHeader("","").build();
 
     }
 }
