@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,8 +23,11 @@ import com.squareup.okhttp.Response;
 import com.xiaobai.adapter.FindAdapter;
 import com.xiaobai.adapter.FindAdapter1;
 import com.xiaobai.dto.HtoDto;
+import com.xiaobai.listview.IXViewListener;
 import com.xiaobai.listview.XListView;
 import com.xiaobai.myapplication.R;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,7 +40,15 @@ import java.util.concurrent.TimeUnit;
 /**
  * 发现
  */
-public class FindFragment extends Fragment {
+public class FindFragment extends Fragment implements IXViewListener {
+
+    /**
+     * .add("CmdId", "queryHotRecord")
+     * .add("Goal", "record")
+     * .add("c_pageCount", "10")
+     * .add("c_currentPage", "1")
+     * .add("Version", "01")
+     */
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -46,7 +58,7 @@ public class FindFragment extends Fragment {
 
     private View rootView;
     private RecyclerView mList;
-    private FindAdapter findAdapter;
+    private FindAdapter1 findAdapter1;
     private List<HtoDto> mDatas = new ArrayList<HtoDto>();
     public String url = "http://janhuu.imwork.net:30319/qianyuApp/requestservices.action";
 
@@ -91,66 +103,71 @@ public class FindFragment extends Fragment {
     }
 
     private void setNetWork() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    try {
-                        post(url);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 
-    /**
-     * 网络设置
-     */
-
-    public void post(String url) throws IOException, JSONException {
-        OkHttpClient mOkHttpClient = new OkHttpClient();
-        mOkHttpClient.setConnectTimeout(30, TimeUnit.SECONDS);
-        RequestBody formBody = new FormEncodingBuilder()
-                .add("CmdId", "queryHotRecord")
-                .add("Goal", "record")
-                .add("c_pageCount", "10")
-                .add("c_currentPage", "1")
-                .add("Version", "01")
-                .build();
-
-        Request request = new Request.Builder()
+        OkHttpUtils.getInstance()
+                .post()
                 .url(url)
-                .post(formBody)
-                .build();
+                .addParams("CmdId", "queryHotRecord")
+                .addParams("Goal", "record")
+                .addParams("c_pageCount", "10")
+                .addParams("c_currentPage", "1")
+                .addParams("Version", "01")
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Request request, Exception e) {
 
-        Response response = mOkHttpClient.newCall(request).execute();
-        if (response.isSuccessful()) {
-            String result = response.body().string();
-            Log.e("return", result);
-            System.out.print(result);
-            Gson gson = new Gson();
+                    }
 
-            JSONObject jsonObject = new JSONObject(result);
-            String data = jsonObject.getString("data");
-            java.lang.reflect.Type type2 = new TypeToken<List<HtoDto>>() {
-            }.getType();
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
 
-            mDatas = gson.fromJson(data, type2);
 
-        } else {
-            throw new IOException("Unexpected code " + response);
-        }
+                        Log.e("res", response);
+                        Gson gson = new Gson();
+                        String data = null;
+
+                        JSONObject jsonObject = null;
+                        try {
+                            jsonObject = new JSONObject(response);
+                            data = jsonObject.getString("data");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        java.lang.reflect.Type type2 = new TypeToken<List<HtoDto>>() {
+                        }.getType();
+
+                        mDatas = gson.fromJson(data, type2);
+
+                    }
+                });
 
     }
 
 
     private void initView() {
+
+
         listView = (XListView) rootView.findViewById(R.id.find_list);
+        findAdapter1 = new FindAdapter1(getActivity(), mDatas);
+        listView.setAdapter(findAdapter1);
+
+        listView.setPullRefreshEnable(true); // 允许下拉刷新
+        listView.setPullLoadEnable(false); // 禁止加载更多
+        listView.setAutoLoadEnable(false); // 禁止自动加载
+        listView.setXListViewListener(this);// 加载监听
 
     }
 
+    @Override
+    public void onRefresh() {
+
+    }
+
+    @Override
+    public void onLoadMore() {
+
+    }
 }
