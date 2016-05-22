@@ -31,4 +31,6 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile files('src/main/res/libs/gson-2.3.1.jar')
     compile files('src/main/libs/gson-2.3.1.jar')
+    compile 'org.xutils:xutils:3.3.34'
+    compile 'org.greenrobot:eventbus:3.0.0'
 }

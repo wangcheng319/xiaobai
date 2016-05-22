@@ -5,7 +5,7 @@
     tools:context="com.xiaobai.fragment.FindFragment">
 
 
-    <com.xiaobai.listview.XListView
+    <ListView
         android:id="@+id/find_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

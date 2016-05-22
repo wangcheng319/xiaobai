@@ -14,9 +14,9 @@ public class HtoDto implements Serializable {
     public String Type;
     public String NickName;
     public String CreateTime;
-    public String Id;
+    public int Id;
     public String Label;
-    public String UserId;
+    public int UserId;
     public String url;
 
 }

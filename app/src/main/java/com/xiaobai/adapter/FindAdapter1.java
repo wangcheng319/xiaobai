@@ -67,7 +67,6 @@ public class FindAdapter1 extends BaseAdapter {
 
         holder.name.setText(item.NickName);
         holder.time.setText(item.CreateTime);
-
         Glide.with(mContext).load(item.urls.get(0)).into(holder.photo);
         return convertView;
     }

@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.xiaobai.myapplication.R;
 
+import java.io.IOException;
+
 
 /**
  *
@@ -490,7 +492,11 @@ public class XScrollView extends ScrollView implements OnScrollListener {
 
     private void refresh() {
         if (mEnablePullRefresh && null != mListener) {
-            mListener.onRefresh();
+            try {
+                mListener.onRefresh();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
