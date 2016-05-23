@@ -16,10 +16,8 @@
         android:id="@+id/realtabcontent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/main_title">
-
-
-    </FrameLayout>
+        android:layout_above="@+id/tabhost"
+        android:layout_below="@+id/main_title" />
 
     <include
         android:id="@+id/tabhost"
