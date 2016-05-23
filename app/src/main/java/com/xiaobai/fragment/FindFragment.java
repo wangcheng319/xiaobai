@@ -173,6 +173,7 @@ public class FindFragment extends Fragment implements IXViewListener {
 
 
         Response response = client.newCall(request).execute();
+        Log.d("req",request.toString()+"");
         if (response.isSuccessful()) {
             String res = response.body().string();
             Log.e("res", res);
