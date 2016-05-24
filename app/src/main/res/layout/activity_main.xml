@@ -7,10 +7,7 @@
 
     <include
         android:id="@+id/main_title"
-        layout="@layout/view_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true" />
+        layout="@layout/view_title" />
 
     <FrameLayout
         android:id="@+id/realtabcontent"

@@ -12,4 +12,6 @@
     <string name="header_hint_refresh_time">更新时间：</string>
     <string name="footer_hint_load_normal">更多</string>
     <string name="footer_hint_load_ready">松开加载更多</string>
+
+    <string name="network">请检查网络设置</string>
 </resources>

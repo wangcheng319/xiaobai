@@ -19,6 +19,7 @@ import com.xiaobai.fragment.MineFragment;
 import com.xiaobai.fragment.MoreFragment;
 import com.xiaobai.fragment.RankFragment;
 import com.xiaobai.myapplication.R;
+import com.xiaobai.utils.StatusBarCompat;
 
 /**
  *
@@ -36,18 +37,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private View tab_add;
     private View tab_rank;
     private View tab_mine;
+    private TextView main_title_tv;
 
     private FragmentManager mFragmentManager;
 
+    private static int[] imgIds = {R.id.home_tab_find_image,
+            R.id.home_tab_more_image, R.id.main_add, R.id.home_tab_rank_image, R.id.home_tab_mine_image};
 
-    // fragment 相对应的正常icon
-//    private int iconNormal[] = { R.drawable.ind_tui_up, R.drawable.ind_tou_up,
-//            R.drawable.ind_zi_up, R.drawable.ind_geng_up };
-//    // fragment 相对应的按压icon
-//    private int iconPressed[] = { R.drawable.ind_tui_dow, R.drawable.ind_tou_dow,
-//            R.drawable.ind_zi_dow, R.drawable.ind_geng_dow };
-    // fragment 相对应的标题
-    private String titleArray[] = { "惠民推荐", "我要投资", "我的资产", "更多" };
+    private static int[] txtIds = {R.id.home_tab_find_text, R.id.home_tab_more_text, R.id.main_add_tv, R.id.home_tab_rank_text, R.id.home_tab_mine_text};
+
+    //     fragment 相对应的正常icon
+    private int iconNormal[] = {R.drawable.home_home, R.drawable.home_more,
+            R.drawable.home_add_selected, R.drawable.home_rank, R.drawable.home_person};
+    // fragment 相对应的按压icon
+    private int iconPressed[] = {R.drawable.home_home_selected, R.drawable.home_more_selected,
+            R.drawable.home_add_selected, R.drawable.home_rank_selected, R.drawable.home_person_selected};
+    //     fragment 相对应的标题
+    private String titleArray[] = {"每日精选", "乐趣无限", "", "排行", "我的"};
     private String toWhere;
 
     @Override
@@ -55,6 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
+        StatusBarCompat.compat(this);
 
         initView();
     }
@@ -66,6 +73,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tab_add = findViewById(R.id.main_add);
         tab_rank = findViewById(R.id.home_tab_rank_layout);
         tab_mine = findViewById(R.id.home_tab_mine_layout);
+
+        main_title_tv = (TextView) findViewById(R.id.main_title_tv);
 
 
         tab_mine.setOnClickListener(this);
@@ -124,21 +133,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      */
     private void setTabSelection(int index) {
         // 设置选中状态显示当前内容视图
-//        home_title_string.setText(titleArray[index]);
-//		int count = mTabHost.getTabWidget().getChildCount();
-//        for (int i = 0; i < imgIds.length; i++) {
-//            if (i == index) {
-//                ((ImageView) findViewById(imgIds[i]))
-//                        .setImageResource(iconPressed[i]);
-//                ((TextView) findViewById(txtIds[i])).setTextColor(getResources()
-//                        .getColor(R.color.home_tab_text_pressed));
-//            } else {
-//                ((ImageView) findViewById(imgIds[i]))
-//                        .setImageResource(iconNormal[i]);
-//                ((TextView) findViewById(txtIds[i])).setTextColor(getResources()
-//                        .getColor(R.color.home_tab_text_normal));
-//            }
-//        }
+        main_title_tv.setText(titleArray[index]);
+//        int count = mTabHost.getTabWidget().getChildCount();
+        for (int i = 0; i < imgIds.length; i++) {
+            if (i == index) {
+                ((ImageView) findViewById(imgIds[i]))
+                        .setImageResource(iconPressed[i]);
+                ((TextView) findViewById(txtIds[i])).setTextColor(getResources()
+                        .getColor(R.color.blue));
+            } else {
+                ((ImageView) findViewById(imgIds[i]))
+                        .setImageResource(iconNormal[i]);
+                ((TextView) findViewById(txtIds[i])).setTextColor(getResources()
+                        .getColor(R.color.pull_view_text));
+            }
+        }
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         hideFragments(transaction);
         switch (index) {
@@ -191,20 +200,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void hideFragments(FragmentTransaction transaction) {
-        if(findFragment != null) {
+        if (findFragment != null) {
             transaction.hide(findFragment);
         }
-        if(moreFragment != null) {
+        if (moreFragment != null) {
             transaction.hide(moreFragment);
         }
-        if (addFragment !=null){
+        if (addFragment != null) {
             transaction.hide(addFragment);
         }
 
-        if(rankFragment != null) {
+        if (rankFragment != null) {
             transaction.hide(rankFragment);
         }
-        if(mineFragment != null) {
+        if (mineFragment != null) {
             transaction.hide(mineFragment);
         }
 
