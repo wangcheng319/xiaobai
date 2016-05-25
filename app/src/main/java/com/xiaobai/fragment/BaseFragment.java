@@ -27,6 +27,7 @@ import java.io.IOException;
  * Created by wangc on 2016/5/19.
  */
 public abstract class BaseFragment extends Fragment {
+    public  static  final String url = "http://janhuu.imwork.net:30319/qianyuApp/requestservices.action";
 
     public BaseFragment() {
 

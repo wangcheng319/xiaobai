@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,6 @@ public class FindFragment extends BaseFragment implements IXViewListener {
 
 
     private View rootView;
-    private RecyclerView mList;
-    private FindAdapter1 findAdapter1;
     private List<HtoDto> mDatas;
     public String url = "http://janhuu.imwork.net:30319/qianyuApp/requestservices.action";
 
@@ -94,7 +93,7 @@ public class FindFragment extends BaseFragment implements IXViewListener {
 
         JSONObject jsonObject = null;
         String data = null;
-
+        Log.i("",msg);
         try {
             jsonObject = new JSONObject(msg);
             data = jsonObject.getString("data");
