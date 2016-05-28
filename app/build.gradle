@@ -5,7 +5,7 @@ android {
     buildToolsVersion "23.0.3"
 
     defaultConfig {
-        applicationId "com.xiaobai.myapplication"
+        applicationId "com.xiaobai.application"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
@@ -33,6 +33,5 @@ dependencies {
     compile files('src/main/libs/gson-2.3.1.jar')
     compile 'org.xutils:xutils:3.3.34'
     compile 'org.greenrobot:eventbus:3.0.0'
-
-    compile 'com.android.support:design:22.2.0'
+    compile project(':Pushlib')
 }

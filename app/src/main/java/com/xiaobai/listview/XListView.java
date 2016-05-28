@@ -20,7 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.Scroller;
 import android.widget.TextView;
 
-import com.xiaobai.myapplication.R;
+
+import com.xiaobai.application.R;
 
 import java.io.IOException;
 

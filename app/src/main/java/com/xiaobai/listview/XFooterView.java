@@ -10,7 +10,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.xiaobai.myapplication.R;
+import com.xiaobai.application.R;
 
 
 /**

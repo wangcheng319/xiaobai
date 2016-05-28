@@ -12,8 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.xiaobai.application.R;
 import com.xiaobai.dto.HtoDto;
-import com.xiaobai.myapplication.R;
 
 import org.w3c.dom.Text;
 

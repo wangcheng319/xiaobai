@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.xiaobai.myapplication.R;
+import com.xiaobai.application.R;
 
 
 /**

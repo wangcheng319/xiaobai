@@ -1,24 +1,19 @@
 package com.xiaobai.activity;
 
-import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.xiaobai.application.R;
 import com.xiaobai.fragment.AddFragment;
 import com.xiaobai.fragment.FindFragment;
 import com.xiaobai.fragment.MineFragment;
 import com.xiaobai.fragment.MoreFragment;
 import com.xiaobai.fragment.RankFragment;
-import com.xiaobai.myapplication.R;
 import com.xiaobai.utils.StatusBarCompat;
 
 /**

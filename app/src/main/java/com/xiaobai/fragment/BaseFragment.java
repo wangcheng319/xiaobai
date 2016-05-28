@@ -18,7 +18,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 import com.squareup.okhttp.internal.http.HttpMethod;
-import com.xiaobai.myapplication.R;
+import com.xiaobai.application.R;
 import com.xiaobai.utils.Utils;
 
 import java.io.IOException;

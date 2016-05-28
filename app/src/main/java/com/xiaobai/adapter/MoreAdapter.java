@@ -8,8 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.xiaobai.application.R;
 import com.xiaobai.dto.MoreDto;
-import com.xiaobai.myapplication.R;
 
 import java.util.List;
 

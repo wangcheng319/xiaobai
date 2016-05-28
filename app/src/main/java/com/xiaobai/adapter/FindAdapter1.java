@@ -9,8 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.xiaobai.application.R;
 import com.xiaobai.dto.HtoDto;
-import com.xiaobai.myapplication.R;
 
 import java.sql.Time;
 import java.util.List;

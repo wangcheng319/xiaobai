@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.xiaobai.application.R;
 import com.xiaobai.dto.HtoDto;
-import com.xiaobai.myapplication.R;
 
 public class FindDetailsActivity extends AppCompatActivity {
 

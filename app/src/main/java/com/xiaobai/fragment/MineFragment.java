@@ -8,7 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.xiaobai.myapplication.R;
+import com.xiaobai.application.R;
+
 
 /**
  * 我的
