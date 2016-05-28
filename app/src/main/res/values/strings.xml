@@ -14,4 +14,9 @@
     <string name="footer_hint_load_ready">松开加载更多</string>
 
     <string name="network">请检查网络设置</string>
+    <string name="login_num">电话:</string>
+    <string name="login_passwd">密码:</string>
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="find_passwd">忘记密码</string>
 </resources>

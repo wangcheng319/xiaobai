@@ -1,13 +1,19 @@
 package com.xiaobai.activity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengRegistrar;
 import com.xiaobai.application.R;
 import com.xiaobai.fragment.AddFragment;
 import com.xiaobai.fragment.FindFragment;
@@ -50,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //     fragment 相对应的标题
     private String titleArray[] = {"每日精选", "乐趣无限", "", "排行", "我的"};
     private String toWhere;
+    private PushAgent mPushAgent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +64,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
         StatusBarCompat.compat(this);
+
+
+        mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.setDebugMode(true);
+        mPushAgent.enable();
+
+        PushAgent.getInstance(this).onAppStart();
+
+        String device_token = UmengRegistrar.getRegistrationId(this);
+        Log.e("", device_token + "");
+        //开启推送并设置注册的回调处理
+        mPushAgent.enable(new IUmengRegisterCallback() {
+
+            @Override
+            public void onRegistered(final String registrationId) {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        //onRegistered方法的参数registrationId即是device_token
+                        Log.d("device_token", registrationId);
+                    }
+                });
+            }
+        });
 
         initView();
     }
