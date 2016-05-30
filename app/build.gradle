@@ -18,7 +18,11 @@ android {
         }
     }
 }
-
+repositories {
+    flatDir {
+        dirs 'libs'//存放aar的目录地址
+    }
+}
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'

@@ -1,5 +1,6 @@
 package com.xiaobai.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -7,7 +8,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -143,8 +143,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setTabSelection(3);
                 break;
             case R.id.home_tab_mine_layout:
-                setTabSelection(4);
+//                setTabSelection(4);
+                startActivity(new Intent(this,LoginActivity.class));
                 break;
+
 
 
         }

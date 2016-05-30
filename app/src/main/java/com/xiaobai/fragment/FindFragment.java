@@ -25,6 +25,7 @@ import com.xiaobai.listview.XListView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,8 +35,8 @@ public class FindFragment extends BaseFragment implements IXViewListener {
 
 
     private View rootView;
-    private List<HtoDto> mDatas;
-    public String url = "http://janhuu.imwork.net:30319/qianyuApp/requestservices.action";
+    private List<HtoDto> mDatas = new ArrayList<HtoDto>();
+//    public String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";
 
     private XListView listView;
 

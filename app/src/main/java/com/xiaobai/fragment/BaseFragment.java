@@ -17,7 +17,6 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-import com.squareup.okhttp.internal.http.HttpMethod;
 import com.xiaobai.application.R;
 import com.xiaobai.utils.Utils;
 
@@ -27,7 +26,7 @@ import java.io.IOException;
  * Created by wangc on 2016/5/19.
  */
 public abstract class BaseFragment extends Fragment {
-    public  static  final String url = "http://janhuu.imwork.net:30319/qianyuApp/requestservices.action";
+    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";
 
     public BaseFragment() {
 
