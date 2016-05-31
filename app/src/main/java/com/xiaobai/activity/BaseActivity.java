@@ -1,6 +1,5 @@
 package com.xiaobai.activity;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -15,7 +14,6 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-import com.umeng.message.PushAgent;
 import com.xiaobai.application.R;
 import com.xiaobai.utils.Utils;
 
