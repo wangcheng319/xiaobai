@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/PushSDK" />
             <option value="$PROJECT_DIR$/Pushlib" />
+            <option value="$PROJECT_DIR$/SMSSDK" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>
@@ -19,6 +20,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/PushSDK" />
             <option value="$PROJECT_DIR$/Pushlib" />
+            <option value="$PROJECT_DIR$/SMSSDK" />
             <option value="$PROJECT_DIR$/app" />
           </set>
         </option>

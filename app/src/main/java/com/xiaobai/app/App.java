@@ -28,6 +28,8 @@ import org.json.JSONObject;
 import org.xutils.BuildConfig;
 import org.xutils.x;
 
+import cn.smssdk.SMSSDK;
+
 /**
  * Created by wangc on 2016/5/11.
  */
@@ -39,7 +41,15 @@ public class App extends Application {
         super.onCreate();
         setUmeng();
         setQiniu();
+        setSharedsdk();
 
+    }
+
+    /**
+     * 短信验证
+     */
+    private void setSharedsdk() {
+        SMSSDK.initSDK(this, "135d671a4ffdc", "2cddd5fb4a9439e904501e0527d16a27");
     }
 
     /**

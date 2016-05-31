@@ -8,6 +8,11 @@ import android.widget.EditText;
 
 import com.xiaobai.application.R;
 
+import java.util.HashMap;
+
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+
 /**
  * 注册
  */
@@ -20,6 +25,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private Button getVerycode;
     private Button register;
+    // 填写从短信SDK应用后台注册得到的APPKEY
+    //此APPKEY仅供测试使用，且不定期失效，请到mob.com后台申请正式APPKEY
+    private static String APPKEY = "135d671a4ffdc";
+
+    // 填写从短信SDK应用后台注册得到的APPSECRET
+    private static String APPSECRET = "2cddd5fb4a9439e904501e0527d16a27";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +38,31 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_register);
 
         initView();
+        initMsg();
+    }
+
+    private void initMsg() {
+        SMSSDK.initSDK(this, "135d671a4ffdc", "2cddd5fb4a9439e904501e0527d16a27");
+        EventHandler eh = new EventHandler() {
+
+            @Override
+            public void afterEvent(int event, int result, Object data) {
+
+                if (result == SMSSDK.RESULT_COMPLETE) {
+                    //回调完成
+                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+                        //提交验证码成功
+                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+                        //获取验证码成功
+                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+                        //返回支持发送验证码的国家列表
+                    }
+                } else {
+                    ((Throwable) data).printStackTrace();
+                }
+            }
+        };
+        SMSSDK.registerEventHandler(eh); //注册短信回调
     }
 
     private void initView() {
@@ -56,10 +92,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.register_veryf:
+                // 打开注册页面
+                SMSSDK.getSupportedCountries();
+                SMSSDK.getVerificationCode("+86", "15659926163");
                 break;
             case R.id.register:
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SMSSDK.unregisterAllEventHandler();
 
     }
 }

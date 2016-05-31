@@ -18,9 +18,9 @@ android {
         }
     }
 }
-repositories {
-    flatDir {
-        dirs 'libs'//存放aar的目录地址
+repositories{
+    flatDir{
+        dirs 'libs' //就是你放aar的目录地址
     }
 }
 dependencies {
@@ -38,4 +38,7 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile project(':Pushlib')
     compile 'com.qiniu:qiniu-android-sdk:7.2.+'
+    compile files('src/main/libs/MobTools-2016.0303.1229.jar')
+    compile files('src/main/libs/MobCommons-2016.0303.1229.jar')
+    compile files('src/main/libs/SMSSDK-2.0.2.jar')
 }

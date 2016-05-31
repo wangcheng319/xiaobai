@@ -1,1 +1,1 @@
-include ':app', ':PushSDK', ':Pushlib'
+include ':app', ':PushSDK', ':Pushlib', ':SMSSDK'
