@@ -32,8 +32,8 @@ import java.io.IOException;
  * Created by wangc on 2016/5/19.
  */
 public abstract class BaseFragment extends Fragment {
-    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";
-
+//    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
+        public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
 
     Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -97,7 +97,7 @@ public abstract class BaseFragment extends Fragment {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                onPostFailure(postId, e.getMessage());
+//                onPostFailure(postId, e.getMessage());
             }
 
             @Override
@@ -105,6 +105,7 @@ public abstract class BaseFragment extends Fragment {
                 if (progressDialog.isShowing()) {
                     progressDialog.cancel();
                 }
+
                 String res = response.body().string();
                 JSONObject jsonObject = null;
                 String data = null;

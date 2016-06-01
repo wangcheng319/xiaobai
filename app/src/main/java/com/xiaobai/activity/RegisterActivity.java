@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.xiaobai.application.R;
 
@@ -62,6 +63,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 //    }
 
     private void initView() {
+        TextView textView = (TextView) findViewById(R.id.main_title_tv);
+        textView.setText("注册");
         phone = (EditText) findViewById(R.id.register_phone);
         verycode = (EditText) findViewById(R.id.register_veryf_num);
         passwd = (EditText) findViewById(R.id.register_passwd);

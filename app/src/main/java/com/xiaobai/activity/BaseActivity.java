@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,8 +27,8 @@ import java.io.IOException;
  * Created by wangc on 2016/5/19.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-    //    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";
-    public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
+//    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
+      public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
     private SystemBarTintManager tintManager;
 
     @Override
@@ -76,7 +77,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-                onPostFailure(postId, e.getMessage());
+//                onPostFailure(postId, e.getMessage());
             }
 
             @Override
@@ -84,6 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (progressDialog.isShowing()) {
                     progressDialog.cancel();
                 }
+                Log.e("token", response.header("token"));
                 onPostSuccess(postId, response.body().string());
             }
         });

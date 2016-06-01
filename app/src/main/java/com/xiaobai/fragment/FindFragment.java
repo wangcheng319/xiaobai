@@ -95,7 +95,7 @@ public class FindFragment extends BaseListFragment implements IXViewListener {
 
     @Override
     public void onPostFailure(int postId, String msg) {
-        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+
     }
 
     @Override
