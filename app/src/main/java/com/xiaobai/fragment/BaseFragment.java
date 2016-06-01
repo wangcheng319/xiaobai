@@ -2,8 +2,11 @@ package com.xiaobai.fragment;
 
 import android.app.Dialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +23,9 @@ import com.squareup.okhttp.Response;
 import com.xiaobai.application.R;
 import com.xiaobai.utils.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 /**
@@ -27,6 +33,19 @@ import java.io.IOException;
  */
 public abstract class BaseFragment extends Fragment {
     public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";
+
+
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            if (msg.what == 0) {
+                onPostSuccess(msg.arg1, String.valueOf(msg.obj));
+            } else {
+                onPostFailure(msg.arg1, String.valueOf(msg.obj));
+            }
+            return false;
+        }
+    });
 
     public BaseFragment() {
 
@@ -86,7 +105,30 @@ public abstract class BaseFragment extends Fragment {
                 if (progressDialog.isShowing()) {
                     progressDialog.cancel();
                 }
-                onPostSuccess(postId, response.body().string());
+                String res = response.body().string();
+                JSONObject jsonObject = null;
+                String data = null;
+                Message mesage = handler.obtainMessage();
+
+                Log.e("res", res);
+                try {
+                    jsonObject = new JSONObject(res);
+                    if (jsonObject.getString("errCode").equals("0")) {
+                        data = jsonObject.getString("data");
+                        mesage.what = 0;
+                        mesage.obj = data;
+                        mesage.arg1 = postId;
+                        handler.sendMessage(mesage);
+                    } else {
+                        mesage.what = 1;
+                        mesage.arg1 = postId;
+                        mesage.obj = jsonObject.getString("errCode" + jsonObject.getString("errMsg"));
+                        handler.sendMessage(mesage);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

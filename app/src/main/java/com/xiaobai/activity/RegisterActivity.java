@@ -8,10 +8,6 @@ import android.widget.EditText;
 
 import com.xiaobai.application.R;
 
-import java.util.HashMap;
-
-import cn.smssdk.EventHandler;
-import cn.smssdk.SMSSDK;
 
 /**
  * 注册
@@ -38,32 +34,32 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_register);
 
         initView();
-        initMsg();
+//        initMsg();
     }
 
-    private void initMsg() {
-        SMSSDK.initSDK(this, "135d671a4ffdc", "2cddd5fb4a9439e904501e0527d16a27");
-        EventHandler eh = new EventHandler() {
-
-            @Override
-            public void afterEvent(int event, int result, Object data) {
-
-                if (result == SMSSDK.RESULT_COMPLETE) {
-                    //回调完成
-                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
-                        //提交验证码成功
-                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
-                        //获取验证码成功
-                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
-                        //返回支持发送验证码的国家列表
-                    }
-                } else {
-                    ((Throwable) data).printStackTrace();
-                }
-            }
-        };
-        SMSSDK.registerEventHandler(eh); //注册短信回调
-    }
+//    private void initMsg() {
+//        SMSSDK.initSDK(this, "135d671a4ffdc", "2cddd5fb4a9439e904501e0527d16a27");
+//        EventHandler eh = new EventHandler() {
+//
+//            @Override
+//            public void afterEvent(int event, int result, Object data) {
+//
+//                if (result == SMSSDK.RESULT_COMPLETE) {
+//                    //回调完成
+//                    if (event == SMSSDK.EVENT_SUBMIT_VERIFICATION_CODE) {
+//                        //提交验证码成功
+//                    } else if (event == SMSSDK.EVENT_GET_VERIFICATION_CODE) {
+//                        //获取验证码成功
+//                    } else if (event == SMSSDK.EVENT_GET_SUPPORTED_COUNTRIES) {
+//                        //返回支持发送验证码的国家列表
+//                    }
+//                } else {
+//                    ((Throwable) data).printStackTrace();
+//                }
+//            }
+//        };
+//        SMSSDK.registerEventHandler(eh); //注册短信回调
+//    }
 
     private void initView() {
         phone = (EditText) findViewById(R.id.register_phone);
@@ -93,8 +89,8 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.register_veryf:
                 // 打开注册页面
-                SMSSDK.getSupportedCountries();
-                SMSSDK.getVerificationCode("+86", "15659926163");
+//                SMSSDK.getSupportedCountries();
+//                SMSSDK.getVerificationCode("+86", "15659926163");
                 break;
             case R.id.register:
                 break;
@@ -104,7 +100,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        SMSSDK.unregisterAllEventHandler();
+//        SMSSDK.unregisterAllEventHandler();
 
     }
 }

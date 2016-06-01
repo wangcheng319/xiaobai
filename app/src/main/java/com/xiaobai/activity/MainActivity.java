@@ -1,6 +1,7 @@
 package com.xiaobai.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
@@ -8,9 +9,12 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
@@ -25,7 +29,7 @@ import com.xiaobai.utils.StatusBarCompat;
 /**
  *
  */
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     //切换内容
     private FindFragment findFragment;
     private AddFragment addFragment;
@@ -57,13 +61,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private String titleArray[] = {"每日精选", "乐趣无限", "", "排行", "我的"};
     private String toWhere;
     private PushAgent mPushAgent;
+    private SystemBarTintManager tintManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_main);
-        StatusBarCompat.compat(this);
+//        StatusBarCompat.compat(this);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintColor(getResources().getColor(R.color.main));
+            tintManager.setStatusBarTintEnabled(true);
+        }
 
 
         mPushAgent = PushAgent.getInstance(this);
@@ -144,9 +156,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.home_tab_mine_layout:
 //                setTabSelection(4);
-                startActivity(new Intent(this,LoginActivity.class));
+                startActivity(new Intent(this, LoginActivity.class));
                 break;
-
 
 
         }
@@ -244,6 +255,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (mineFragment != null) {
             transaction.hide(mineFragment);
         }
+
+    }
+
+    @Override
+    public void onPostSuccess(int postId, String msg) {
+
+    }
+
+    @Override
+    public void onPostFailure(int postId, String msg) {
 
     }
 }

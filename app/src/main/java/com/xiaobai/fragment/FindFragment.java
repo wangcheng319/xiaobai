@@ -2,28 +2,23 @@ package com.xiaobai.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
 import com.xiaobai.activity.FindDetailsActivity;
-import com.xiaobai.adapter.FindAdapter1;
+import com.xiaobai.adapter.FindAdapter;
 import com.xiaobai.application.R;
 import com.xiaobai.dto.HtoDto;
 import com.xiaobai.listview.IXViewListener;
 import com.xiaobai.listview.XListView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,35 +26,22 @@ import java.util.List;
 /**
  * 发现
  */
-public class FindFragment extends BaseFragment implements IXViewListener {
+public class FindFragment extends BaseListFragment implements IXViewListener {
 
 
     private View rootView;
     private List<HtoDto> mDatas = new ArrayList<HtoDto>();
-//    public String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";
-
     private XListView listView;
+    private FindAdapter findAdapter;
+    private int pageNo = 1;
+    private int pageSize = 10;
+    private RequestBody formBody;
 
 
     public FindFragment() {
         // Required empty public constructor
     }
 
-
-    Handler handler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message msg) {
-            if (msg.what == 0) {
-                Gson gson = new Gson();
-                java.lang.reflect.Type type2 = new TypeToken<List<HtoDto>>() {
-                }.getType();
-
-                mDatas = gson.fromJson(msg.obj.toString(), type2);
-                listView.setAdapter(new FindAdapter1(getActivity(), mDatas));
-            }
-            return false;
-        }
-    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,11 +59,11 @@ public class FindFragment extends BaseFragment implements IXViewListener {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RequestBody formBody = new FormEncodingBuilder()
+        formBody = new FormEncodingBuilder()
                 .add("CmdId", "queryHotRecord")
                 .add("Goal", "record")
-                .add("c_pageCount", "10")
-                .add("c_currentPage", "1")
+                .add("c_pageCount", pageSize + "")
+                .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
         onRequest(101, url, formBody);
@@ -91,27 +73,29 @@ public class FindFragment extends BaseFragment implements IXViewListener {
     @Override
     public void onPostSuccess(int postId, String msg) {
 
-        JSONObject jsonObject = null;
-        String data = null;
-        Log.i("",msg);
-        try {
-            jsonObject = new JSONObject(msg);
-            data = jsonObject.getString("data");
-        } catch (JSONException e) {
-            e.printStackTrace();
+        Gson gson = new Gson();
+        java.lang.reflect.Type type2 = new TypeToken<List<HtoDto>>() {
+        }.getType();
+
+        if (pageNo == 1) {
+            mDatas.clear();
         }
 
-        Message mesage = handler.obtainMessage();
-        mesage.what = 0;
-        mesage.obj = data;
-        handler.sendMessage(mesage);
-
+        List<HtoDto> lists = gson.fromJson(msg, type2);
+        mDatas.addAll(lists);
+        findAdapter.notifyDataSetChanged();
+        if ((lists.size() - 1) / pageSize < pageNo) {
+            listView.setPullLoadEnable(true);
+            pageNo++;
+        } else {
+            listView.setPullLoadEnable(false);
+        }
     }
+
 
     @Override
     public void onPostFailure(int postId, String msg) {
-
-
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -123,11 +107,12 @@ public class FindFragment extends BaseFragment implements IXViewListener {
     private void initView() {
         listView = (XListView) rootView.findViewById(R.id.find_list);
         listView.setPullRefreshEnable(true); // 允许下拉刷新
-        listView.setPullLoadEnable(false); // 禁止加载更多
-        listView.setAutoLoadEnable(true); // 禁止自动加载
+        listView.setPullLoadEnable(true); // 禁止加载更多
+        listView.setAutoLoadEnable(false); // 禁止自动加载
         listView.setXListViewListener(this);// 加载监听
 
-
+        findAdapter = new FindAdapter(getActivity(), mDatas);
+        listView.setAdapter(findAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -144,11 +129,12 @@ public class FindFragment extends BaseFragment implements IXViewListener {
 
     @Override
     public void onRefresh() {
-        RequestBody formBody = new FormEncodingBuilder()
+        pageNo = 1;
+        formBody = new FormEncodingBuilder()
                 .add("CmdId", "queryHotRecord")
                 .add("Goal", "record")
-                .add("c_pageCount", "10")
-                .add("c_currentPage", "1")
+                .add("c_pageCount", pageSize + "")
+                .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
         onRequest(101, url, formBody);
@@ -156,7 +142,14 @@ public class FindFragment extends BaseFragment implements IXViewListener {
 
     @Override
     public void onLoadMore() {
-
+        formBody = new FormEncodingBuilder()
+                .add("CmdId", "queryHotRecord")
+                .add("Goal", "record")
+                .add("c_pageCount", pageSize + "")
+                .add("c_currentPage", pageNo + "")
+                .add("Version", "01")
+                .build();
+        onRequest(101, url, formBody);
     }
 
     @Override

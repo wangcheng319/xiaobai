@@ -1,12 +1,15 @@
 package com.xiaobai.activity;
 
 import android.app.Dialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -23,12 +26,20 @@ import java.io.IOException;
  * Created by wangc on 2016/5/19.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-//    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";
-    public static  final String url ="http://192.168.31.200:8080/qianyuApp/requestservices.action";
+    //    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";
+    public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
+    private SystemBarTintManager tintManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            tintManager = new SystemBarTintManager(this);
+            tintManager.setStatusBarTintColor(getResources().getColor(R.color.main));
+            tintManager.setStatusBarTintEnabled(true);
+        }
 
     }
 
