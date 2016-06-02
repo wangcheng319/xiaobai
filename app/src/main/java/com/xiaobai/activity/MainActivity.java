@@ -1,16 +1,23 @@
 package com.xiaobai.activity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,12 +31,22 @@ import com.xiaobai.fragment.FindFragment;
 import com.xiaobai.fragment.MineFragment;
 import com.xiaobai.fragment.MoreFragment;
 import com.xiaobai.fragment.RankFragment;
-import com.xiaobai.utils.StatusBarCompat;
+import com.xiaobai.imagepicker.AndroidImagePicker;
+import com.xiaobai.imagepicker.ImageItem;
+import com.xiaobai.imagepicker.ImagePresenter;
+import com.xiaobai.imagepicker.ImagesGridActivity;
+import com.xiaobai.imagepicker.UilImagePresenter;
+import com.xiaobai.imagepicker.Util;
+import com.xiaobai.utils.Utils;
+
+import java.util.List;
 
 /**
  *
  */
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener,
+        AndroidImagePicker.OnPictureTakeCompleteListener, AndroidImagePicker.OnImageCropCompleteListener,
+        AndroidImagePicker.OnImagePickCompleteListener {
     //切换内容
     private FindFragment findFragment;
     private AddFragment addFragment;
@@ -62,6 +79,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private String toWhere;
     private PushAgent mPushAgent;
     private SystemBarTintManager tintManager;
+    //图片选择
+    private final int REQ_IMAGE = 1433;
+    private ImageView ivCrop;
+    ImagePresenter presenter = new UilImagePresenter();
+    //private ImageView ivShow;
+    GridView mGridView;
+    SelectAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +148,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mFragmentManager = getSupportFragmentManager();
 
         setTabSelection(0);
+        //图片选择
+        AndroidImagePicker.getInstance().addOnImageCropCompleteListener(this);
 
     }
 
@@ -149,7 +175,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 setTabSelection(1);
                 break;
             case R.id.main_add:
-                setTabSelection(2);
+//                setTabSelection(2);
+                Intent intent = new Intent();
+                int requestCode = REQ_IMAGE;
+                AndroidImagePicker.getInstance().setSelectMode(AndroidImagePicker.Select_Mode.MODE_MULTI);
+                AndroidImagePicker.getInstance().setShouldShowCamera(true);
+                intent.setClass(this, ImagesGridActivity.class);
+                startActivityForResult(intent, requestCode);
                 break;
             case R.id.home_tab_rank_layout:
                 setTabSelection(3);
@@ -265,6 +297,98 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @Override
     public void onPostFailure(int postId, String msg) {
+
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQ_IMAGE) {
+
+                List<ImageItem> imageList = AndroidImagePicker.getInstance().getSelectedImages();
+//                mAdapter.clear();
+//                mAdapter.addAll(imageList);
+            }/*else if(requestCode == REQ_IMAGE_CROP){
+                Bitmap bmp = (Bitmap)data.getExtras().get("bitmap");
+                Log.i(TAG,"-----"+bmp.getRowBytes());
+            }*/
+        }
+    }
+
+
+    @Override
+    public void onPictureTakeComplete(String picturePath) {
+//        ivCrop.setVisibility(View.GONE);
+        List<ImageItem> imageList = AndroidImagePicker.getInstance().getSelectedImages();
+        imageList.clear();
+        ImageItem item = new ImageItem(picturePath, "", 0);
+        imageList.add(item);
+//        mAdapter.clear();
+//        mAdapter.addAll(imageList);
+
+    }
+
+    @Override
+    public void onImageCropComplete(Bitmap bmp, float ratio) {
+//        ivCrop.setVisibility(View.VISIBLE);
+//        ivCrop.setImageBitmap(bmp);
+    }
+
+    @Override
+    public void onImagePickComplete(List<ImageItem> items) {
+//        ivCrop.setVisibility(View.GONE);
+
+        //List<ImageItem> imageList = AndroidImagePicker.getInstance().getSelectedImages();
+//        mAdapter.clear();
+//        mAdapter.addAll(items);
+    }
+
+
+    class SelectAdapter extends ArrayAdapter<ImageItem> {
+
+        //private int mResourceId;
+        public SelectAdapter(Context context) {
+            super(context, 0);
+            //this.mResourceId = resource;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            ImageItem item = getItem(position);
+            LayoutInflater inflater = getLayoutInflater();
+            //View view = inflater.inflate(mResourceId, null);
+            int width = (Utils.screenWidth_ - Util.dp2px(MainActivity.this, 10 * 2)) / 3;
+
+            ImageView imageView = new ImageView(MainActivity.this);
+            imageView.setBackgroundColor(Color.GRAY);
+            GridView.LayoutParams params = new AbsListView.LayoutParams(width, width);
+            imageView.setLayoutParams(params);
+
+
+            presenter.onPresentImage(imageView, item.path, width);
+
+            return imageView;
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        AndroidImagePicker.getInstance().setOnPictureTakeCompleteListener(this);//watching Picture taking
+        AndroidImagePicker.getInstance().setOnImagePickCompleteListener(this);
+        super.onResume();
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        AndroidImagePicker.getInstance().deleteOnImagePickCompleteListener(this);
+        AndroidImagePicker.getInstance().removeOnImageCropCompleteListener(this);
+        AndroidImagePicker.getInstance().deleteOnPictureTakeCompleteListener(this);
 
     }
 }
