@@ -27,13 +27,14 @@ import java.io.IOException;
  * Created by wangc on 2016/5/19.
  */
 public abstract class BaseActivity extends AppCompatActivity {
-//    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
-      public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
+    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
+    //      public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
     private SystemBarTintManager tintManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
         super.onCreate(savedInstanceState, persistentState);
+        //设置状态栏
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -41,18 +42,13 @@ public abstract class BaseActivity extends AppCompatActivity {
             tintManager.setStatusBarTintColor(getResources().getColor(R.color.main));
             tintManager.setStatusBarTintEnabled(true);
         }
-
     }
 
-    public void onRequest(final int postId, final String url, RequestBody requestBody) {
+    public void onRequest(final int postId, final String url, RequestBody requestBody, String header) {
         if (!Utils.isConnectByNet(this) && !Utils.isConnectByMobile(this) && !Utils.isConnectByWifi(this)) {
             Toast.makeText(this, getString(R.string.network), Toast.LENGTH_SHORT).show();
             return;
         }
-
-//        if (methodType == null) {
-//            return;
-//        }
 
         OkHttpClient client = new OkHttpClient();
         if (requestBody == null) {
@@ -66,6 +62,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
         msg.setTextSize(12);
         msg.setText("卖力加载中...");
+        progressDialog.show();
 
 
         Request request = new Request.Builder()
@@ -77,7 +74,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         call.enqueue(new Callback() {
             @Override
             public void onFailure(Request request, IOException e) {
-//                onPostFailure(postId, e.getMessage());
+                onPostFailure(postId, e.getMessage());
+                if (progressDialog.isShowing()) {
+                    progressDialog.cancel();
+                }
             }
 
             @Override
@@ -107,15 +107,4 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public abstract void onPostFailure(int postId, String msg);
 
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
 }

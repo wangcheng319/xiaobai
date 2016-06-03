@@ -23,10 +23,12 @@ import com.xiaobai.listview.XListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import okhttp3.internal.framed.Header;
+
 /**
  * 发现
  */
-public class FindFragment extends BaseListFragment implements IXViewListener {
+public class FindFragment extends BaseListFragment {
 
 
     private View rootView;
@@ -36,17 +38,7 @@ public class FindFragment extends BaseListFragment implements IXViewListener {
     private int pageNo = 1;
     private int pageSize = 10;
     private RequestBody formBody;
-
-
-    public FindFragment() {
-        // Required empty public constructor
-    }
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private List<HtoDto> lists;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +50,12 @@ public class FindFragment extends BaseListFragment implements IXViewListener {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initView();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
         formBody = new FormEncodingBuilder()
                 .add("CmdId", "queryHotRecord")
                 .add("Goal", "record")
@@ -66,13 +63,13 @@ public class FindFragment extends BaseListFragment implements IXViewListener {
                 .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
-        onRequest(101, url, formBody);
-        initView();
+        onRequest(101, url, formBody, "");
     }
 
     @Override
     public void onPostSuccess(int postId, String msg) {
 
+        setLoadingFinish();
         Gson gson = new Gson();
         java.lang.reflect.Type type2 = new TypeToken<List<HtoDto>>() {
         }.getType();
@@ -80,34 +77,50 @@ public class FindFragment extends BaseListFragment implements IXViewListener {
         if (pageNo == 1) {
             mDatas.clear();
         }
-
-        List<HtoDto> lists = gson.fromJson(msg, type2);
+        lists = gson.fromJson(msg, type2);
         mDatas.addAll(lists);
         findAdapter.notifyDataSetChanged();
-        if ((lists.size() - 1) / pageSize < pageNo) {
+        //判断是否加载下一页
+        if (listView != null && (lists.size() - 1) / pageSize < pageNo) {
             listView.setPullLoadEnable(true);
             pageNo++;
         } else {
             listView.setPullLoadEnable(false);
         }
+        lists.clear();
     }
 
 
     @Override
     public void onPostFailure(int postId, String msg) {
+        setLoadingFinish();
+        if (listView != null && (lists.size() - 1) / pageSize < pageNo) {
+            listView.setPullLoadEnable(true);
+            pageNo++;
+        } else {
+            listView.setPullLoadEnable(false);
+        }
 
     }
 
     @Override
-    public void onResume() {
-
-        super.onResume();
+    public XListView getXList() {
+        return listView;
     }
+
+    /**
+     * 加载结束
+     */
+    private void setLoadingFinish() {
+        listView.stopLoadMore();
+        listView.stopRefresh();
+    }
+
 
     private void initView() {
         listView = (XListView) rootView.findViewById(R.id.find_list);
         listView.setPullRefreshEnable(true); // 允许下拉刷新
-        listView.setPullLoadEnable(true); // 禁止加载更多
+        listView.setPullLoadEnable(false); // 禁止加载更多
         listView.setAutoLoadEnable(false); // 禁止自动加载
         listView.setXListViewListener(this);// 加载监听
 
@@ -137,7 +150,7 @@ public class FindFragment extends BaseListFragment implements IXViewListener {
                 .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
-        onRequest(101, url, formBody);
+        onRequest(101, url, formBody, "");
     }
 
     @Override
@@ -149,7 +162,7 @@ public class FindFragment extends BaseListFragment implements IXViewListener {
                 .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
-        onRequest(101, url, formBody);
+        onRequest(101, url, formBody, "");
     }
 
     @Override

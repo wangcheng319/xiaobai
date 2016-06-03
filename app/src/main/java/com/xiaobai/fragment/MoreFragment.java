@@ -11,6 +11,8 @@ import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
 import com.xiaobai.application.R;
 
+import okhttp3.internal.framed.Header;
+
 /**
  * 更多
  */
@@ -50,7 +52,7 @@ public class MoreFragment extends BaseFragment {
                 .add("CmdId", "queryCatgroy")
                 .add("Goal", "record")
                 .build();
-        onRequest(101, url, requestBody);
+        onRequest(101, url, requestBody, "");
     }
 
     private void initView() {

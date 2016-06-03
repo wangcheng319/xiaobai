@@ -23,6 +23,7 @@ import com.umeng.message.UmengNotificationClickHandler;
 import com.umeng.message.UmengRegistrar;
 import com.umeng.message.entity.UMessage;
 import com.xiaobai.application.R;
+import com.xiaobai.dto.User;
 
 import org.json.JSONObject;
 import org.xutils.BuildConfig;
@@ -34,7 +35,18 @@ import cn.smssdk.SMSSDK;
  * Created by wangc on 2016/5/11.
  */
 public class App extends Application {
+    private static App appInstance;
     private PushAgent mPushAgent;
+    public User user;
+    public String token = "";
+
+
+    public static App getInstance() {
+        if (null == appInstance) {
+            appInstance = new App();
+        }
+        return appInstance;
+    }
 
     @Override
     public void onCreate() {

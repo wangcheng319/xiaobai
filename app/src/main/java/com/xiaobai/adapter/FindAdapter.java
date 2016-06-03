@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.squareup.picasso.Picasso;
 import com.xiaobai.application.R;
 import com.xiaobai.dto.HtoDto;
+import com.xiaobai.utils.Utils;
 
 import java.sql.Time;
 import java.util.List;
@@ -68,8 +70,20 @@ public class FindAdapter extends BaseAdapter {
 
         holder.name.setText(item.NickName);
         holder.time.setText(item.CreateTime);
-//        Glide.with(mContext).load(item.urls.get(0)).into(holder.photo);
-        Picasso.with(mContext).load(item.urls.get(0)).into(holder.photo);
+//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,Utils.screenHeight_/4);
+//        holder.photo.setLayoutParams(params);
+        Glide.with(mContext)
+                .load(item.urls.get(0))
+                .placeholder(R.drawable.ic_back)
+                .crossFade()
+                .centerCrop()
+                .into(holder.photo);
+
+//        Picasso.with(mContext)
+//                .load(item.urls.get(0))
+//                .resize(Utils.screenWidth_,400)
+//                .centerCrop()
+//                .into(holder.photo);
         return convertView;
 
     }
