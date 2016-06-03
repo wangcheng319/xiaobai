@@ -1,6 +1,10 @@
 package com.xiaobai.adapter;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +21,7 @@ import com.xiaobai.utils.Utils;
 
 import java.sql.Time;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by Wangc on 2016/5/14.
@@ -25,6 +30,8 @@ public class FindAdapter extends BaseAdapter {
     private Context mContext;
     private List<HtoDto> mDatas;
     private LayoutInflater mInflater;
+    String[] colors = new String[]{"#a04940", "#ee8d7b", "#7065a3", "#85916d", "#c1d8ac", "#8c8684", "#c1d8ac",
+            "#c18dac", "#93b69c", "#c85179", "#9dc357", "#FFE4B5", "#7fcce3", "#73b8e2", "#cbb994", "#5b7e91"};
 
     public FindAdapter(Context context, List<HtoDto> datas) {
         this.mContext = context;
@@ -70,20 +77,35 @@ public class FindAdapter extends BaseAdapter {
 
         holder.name.setText(item.NickName);
         holder.time.setText(item.CreateTime);
-//        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT,Utils.screenHeight_/4);
-//        holder.photo.setLayoutParams(params);
+        //生成一个随机色块
+        final int random = new Random().nextInt(16);
+        Drawable drawable = new Drawable() {
+            @Override
+            public void draw(Canvas canvas) {
+                canvas.drawColor(Color.parseColor(colors[random]));
+            }
+
+            @Override
+            public void setAlpha(int alpha) {
+
+            }
+
+            @Override
+            public void setColorFilter(ColorFilter colorFilter) {
+
+            }
+
+            @Override
+            public int getOpacity() {
+                return 0;
+            }
+        };
         Glide.with(mContext)
                 .load(item.urls.get(0))
-                .placeholder(R.drawable.ic_back)
+                .placeholder(drawable)
                 .crossFade()
                 .centerCrop()
                 .into(holder.photo);
-
-//        Picasso.with(mContext)
-//                .load(item.urls.get(0))
-//                .resize(Utils.screenWidth_,400)
-//                .centerCrop()
-//                .into(holder.photo);
         return convertView;
 
     }
