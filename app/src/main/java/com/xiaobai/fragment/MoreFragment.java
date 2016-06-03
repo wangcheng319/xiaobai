@@ -2,6 +2,8 @@ package com.xiaobai.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +11,11 @@ import android.view.ViewGroup;
 
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
+import com.xiaobai.adapter.MoreAdapter;
 import com.xiaobai.application.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.internal.framed.Header;
 
@@ -18,6 +24,8 @@ import okhttp3.internal.framed.Header;
  */
 public class MoreFragment extends BaseFragment {
     private View rootView;
+    private RecyclerView recyclerView;
+    private MoreAdapter adapter;
 
     public MoreFragment() {
         // Required empty public constructor
@@ -56,6 +64,14 @@ public class MoreFragment extends BaseFragment {
     }
 
     private void initView() {
+        List<String> mDatas = new ArrayList<String>();
+        for (int i = 'A'; i < 'z'; i++) {
+            mDatas.add("" + (char) i);
+        }
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.id_recyclerview);
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setAdapter(adapter = new MoreAdapter(getActivity(), mDatas));
 
     }
 
