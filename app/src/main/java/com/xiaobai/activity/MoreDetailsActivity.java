@@ -49,11 +49,13 @@ public class MoreDetailsActivity extends BaseListActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
+        pageNo = 1;
         formBody = new FormEncodingBuilder()
                 .add("CmdId", "queryRecordByCatgory ")
                 .add("Goal", "record")
                 .add("c_catgoryCode", item.Code + "")
+                .add("c_pageCount", pageSize + "")
+                .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
         onRequest(101, url, formBody, "");
