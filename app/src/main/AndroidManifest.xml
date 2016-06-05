@@ -65,18 +65,20 @@
 
         <activity android:name="com.xiaobai.activity.FindDetailsActivity" />
         <activity android:name="com.xiaobai.activity.LoginActivity" />
-        <activity android:name="com.xiaobai.activity.RegisterActivity"></activity>
-        <!--图片选择-->
+        <activity android:name="com.xiaobai.activity.RegisterActivity" />
+        <activity android:name="com.xiaobai.activity.RankDetailsActivity" />
+        <activity android:name="com.xiaobai.activity.MoreDetailsActivity"/>
+        <!-- 图片选择 -->
         <activity android:name="com.xiaobai.imagepicker.ImagesGridActivity" />
         <activity android:name="com.xiaobai.imagepicker.ImageCropActivity" />
-        <activity android:name="com.xiaobai.imagepicker.ImagePreviewActivity"/>
-
+        <activity android:name="com.xiaobai.imagepicker.ImagePreviewActivity" />
         //Sharedsdk 短信验证
         <activity
             android:name="com.mob.tools.MobUIShell"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+
     </application>
 
 </manifest>

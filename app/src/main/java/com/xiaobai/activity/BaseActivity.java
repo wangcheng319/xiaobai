@@ -85,7 +85,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (progressDialog.isShowing()) {
                     progressDialog.cancel();
                 }
-                Log.e("token", response.header("token"));
+                Log.e("token", response.header("token")+"");
                 onPostSuccess(postId, response.body().string());
             }
         });

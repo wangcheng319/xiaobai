@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -17,13 +16,11 @@ import com.xiaobai.activity.FindDetailsActivity;
 import com.xiaobai.adapter.FindAdapter;
 import com.xiaobai.application.R;
 import com.xiaobai.dto.HtoDto;
-import com.xiaobai.listview.IXViewListener;
 import com.xiaobai.listview.XListView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.internal.framed.Header;
 
 /**
  * 发现
@@ -56,6 +53,7 @@ public class FindFragment extends BaseListFragment {
     @Override
     public void onResume() {
         super.onResume();
+        pageNo = 1;
         formBody = new FormEncodingBuilder()
                 .add("CmdId", "queryHotRecord")
                 .add("Goal", "record")

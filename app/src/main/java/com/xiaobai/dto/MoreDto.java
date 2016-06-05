@@ -7,5 +7,8 @@ import java.io.Serializable;
  * E-MAIL:274281610@QQ.COM
  */
 public class MoreDto implements Serializable {
+    public String Name;
+    public String CatgroyImage;
+    public String Code;
 
 }

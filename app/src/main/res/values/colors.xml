@@ -27,4 +27,5 @@
     <color name="oval_light_green">#67cdb7</color>
     <color name="oval_purple">#9b73e6</color>
     <color name="oval_brown">#CCFD8225</color>
+    <color name="gray">#f5f5f5</color>
 </resources>
