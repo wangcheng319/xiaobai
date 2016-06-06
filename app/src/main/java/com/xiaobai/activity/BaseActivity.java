@@ -3,9 +3,12 @@ package com.xiaobai.activity;
 import android.app.Dialog;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,15 +24,30 @@ import com.squareup.okhttp.Response;
 import com.xiaobai.application.R;
 import com.xiaobai.utils.Utils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 
 /**
  * Created by wangc on 2016/5/19.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
     public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
     //      public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
     private SystemBarTintManager tintManager;
+
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            if (msg.what == 0) {
+                onPostSuccess(msg.arg1, String.valueOf(msg.obj));
+            } else {
+                onPostFailure(msg.arg1, String.valueOf(msg.obj));
+            }
+            return true;
+        }
+    });
 
     @Override
     public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
@@ -42,6 +60,9 @@ public abstract class BaseActivity extends AppCompatActivity {
             tintManager.setStatusBarTintColor(getResources().getColor(R.color.main));
             tintManager.setStatusBarTintEnabled(true);
         }
+
+        //返回
+        findViewById(R.id.main_title_left).setOnClickListener(this);
     }
 
     public void onRequest(final int postId, final String url, RequestBody requestBody, String header) {
@@ -85,8 +106,31 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (progressDialog.isShowing()) {
                     progressDialog.cancel();
                 }
-                Log.e("token", response.header("token")+"");
-                onPostSuccess(postId, response.body().string());
+                Log.e("token", response.header("token") + "");
+                String res = response.body().string();
+                JSONObject jsonObject = null;
+                String data = null;
+                Message mesage = handler.obtainMessage();
+
+                Log.e("res", res);
+                try {
+                    jsonObject = new JSONObject(res);
+                    if (jsonObject.getString("errCode").equals("0")) {
+                        data = jsonObject.getString("data");
+                        mesage.what = 0;
+                        mesage.obj = data;
+                        mesage.arg1 = postId;
+                        handler.sendMessage(mesage);
+                    } else {
+                        mesage.what = 1;
+                        mesage.arg1 = postId;
+                        mesage.obj = jsonObject.getString("errCode" + jsonObject.getString("errMsg"));
+                        handler.sendMessage(mesage);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }
@@ -107,4 +151,12 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     public abstract void onPostFailure(int postId, String msg);
 
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.main_title_left:
+                finish();
+                break;
+        }
+    }
 }

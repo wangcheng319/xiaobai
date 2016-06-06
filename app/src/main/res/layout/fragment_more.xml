@@ -12,5 +12,4 @@
         android:divider="#fff"
         android:dividerHeight="10dp" />
 
-
 </RelativeLayout>

@@ -141,6 +141,7 @@ public class FindFragment extends BaseListFragment {
     @Override
     public void onRefresh() {
         pageNo = 1;
+        mDatas.clear();
         formBody = new FormEncodingBuilder()
                 .add("CmdId", "queryHotRecord")
                 .add("Goal", "record")

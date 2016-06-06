@@ -26,6 +26,13 @@
         <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorAccent">#FF4081</item>
     </style>
+    <!--启动页 防止出现白屏-->
+    <style name="AppStartTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
 
     <!--  这个是加入的代码 -->
     <style name="popupwindow_anim_style">

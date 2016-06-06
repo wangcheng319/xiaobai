@@ -1,14 +1,18 @@
 package com.xiaobai.fragment;
 
+import android.animation.ObjectAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -31,7 +35,6 @@ public class MoreFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private MoreAdapter adapter;
     private List<MoreDto> moreDtos = new ArrayList<MoreDto>();
-
     public MoreFragment() {
         // Required empty public constructor
     }
@@ -86,12 +89,12 @@ public class MoreFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
-
-
     }
+
 
     @Override
     public void onPostSuccess(int postId, String msg) {
+        moreDtos.clear();
         Log.d("tag", msg + "");
         Gson gson = new Gson();
         java.lang.reflect.Type type = new TypeToken<List<MoreDto>>() {

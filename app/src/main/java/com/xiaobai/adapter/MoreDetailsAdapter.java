@@ -62,11 +62,11 @@ public class MoreDetailsAdapter extends BaseAdapter {
 
         ViewHolder holder;
         if (convertView == null) {
-            convertView = mInflater.inflate(R.layout.layout_find_item, null);
+            convertView = mInflater.inflate(R.layout.layout_more_details_item, null);
             holder = new ViewHolder();
-            holder.time = (TextView) convertView.findViewById(R.id.find_item_time);
-            holder.name = (TextView) convertView.findViewById(R.id.find_item_name);
-            holder.photo = (ImageView) convertView.findViewById(R.id.find_item_photo);
+            holder.time = (TextView) convertView.findViewById(R.id.more_details_item_time);
+            holder.name = (TextView) convertView.findViewById(R.id.more_details_item_name);
+            holder.photo = (ImageView) convertView.findViewById(R.id.more_details_item_photo);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -74,8 +74,8 @@ public class MoreDetailsAdapter extends BaseAdapter {
 
         MoreDetailsDto item = mDatas.get(position);
 
-//        holder.name.setText(item.NickName);
-//        holder.time.setText(item.CreateTime);
+        holder.name.setText(item.NickName);
+        holder.time.setText(item.CreateTime);
         //生成一个随机色块
         final int random = new Random().nextInt(16);
         Drawable drawable = new Drawable() {
@@ -99,12 +99,12 @@ public class MoreDetailsAdapter extends BaseAdapter {
                 return 0;
             }
         };
-//        Glide.with(mContext)
-//                .load(item.urls.get(0))
-//                .placeholder(drawable)
-//                .crossFade()
-//                .centerCrop()
-//                .into(holder.photo);
+        Glide.with(mContext)
+                .load(item.urls.get(0))
+                .placeholder(drawable)
+                .crossFade()
+                .centerCrop()
+                .into(holder.photo);
         return convertView;
 
     }
