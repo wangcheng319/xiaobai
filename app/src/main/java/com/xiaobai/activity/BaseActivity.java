@@ -1,12 +1,15 @@
 package com.xiaobai.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +24,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.xiaobai.app.App;
 import com.xiaobai.application.R;
 import com.xiaobai.utils.Utils;
 
@@ -106,7 +110,18 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 if (progressDialog.isShowing()) {
                     progressDialog.cancel();
                 }
-                Log.e("token", response.header("token") + "");
+                String token = "";
+                if (!TextUtils.isEmpty(response.header("token"))) {
+                    token = response.header("token");
+                    Log.e("token", token);
+                }
+                // 获取SharedPreferences对象
+                SharedPreferences sp = getSharedPreferences("token_save",
+                        Activity.MODE_PRIVATE);
+                // 获取Editor对象
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putString("token", token);
+                editor.commit();
                 String res = response.body().string();
                 JSONObject jsonObject = null;
                 String data = null;

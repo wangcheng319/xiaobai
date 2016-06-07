@@ -14,7 +14,10 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -45,6 +48,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 import javax.crypto.Cipher;
@@ -260,19 +264,19 @@ public class Utils {
      * @param title
      */
     /*
-	 * public static void jumpURL(Context context, String url, String title) {
+     * public static void jumpURL(Context context, String url, String title) {
 	 * if (TextUtils.isEmpty(url) || "#".equals(url)) { return; }
 	 * 
 	 * Intent intent = new Intent(context, WebActivity.class);
 	 * intent.putExtra("url", url); intent.putExtra("name", title);
 	 * context.startActivity(intent); }
 	 */
-	
+
 	/*	*//**
      * 9.658 return 9.65
      */
-	/*
-	 * public static BigDecimal scale(double scale){ return new
+    /*
+     * public static BigDecimal scale(double scale){ return new
 	 * BigDecimal(scale).setScale(2, BigDecimal.ROUND_DOWN); }
 	 */
 
@@ -723,5 +727,40 @@ public class Utils {
         WordtoSpan.setSpan(new AbsoluteSizeSpan(20), end - 1, str.length() - 2,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         view.setText(WordtoSpan);
+    }
+
+    /**
+     * 生成一个随机色块
+     *
+     * @return
+     */
+    public static Drawable makeDrable() {
+        final String[] colors = new String[]{"#a04940", "#ee8d7b", "#7065a3", "#85916d", "#c1d8ac", "#8c8684", "#c1d8ac",
+                "#c18dac", "#93b69c", "#c85179", "#9dc357", "#FFE4B5", "#7fcce3", "#73b8e2", "#cbb994", "#5b7e91"};
+
+        final int random = new Random().nextInt(16);
+        Drawable drawable = new Drawable() {
+            @Override
+            public void draw(Canvas canvas) {
+                canvas.drawColor(Color.parseColor(colors[random]));
+            }
+
+            @Override
+            public void setAlpha(int alpha) {
+
+            }
+
+            @Override
+            public void setColorFilter(ColorFilter colorFilter) {
+
+            }
+
+            @Override
+            public int getOpacity() {
+                return 0;
+            }
+        };
+
+        return drawable;
     }
 }

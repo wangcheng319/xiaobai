@@ -3,6 +3,7 @@ package com.xiaobai.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
@@ -20,11 +21,22 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UploadManager;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UmengRegistrar;
+import com.xiaobai.app.App;
 import com.xiaobai.application.R;
 import com.xiaobai.fragment.AddFragment;
 import com.xiaobai.fragment.FindFragment;
@@ -39,7 +51,16 @@ import com.xiaobai.imagepicker.UilImagePresenter;
 import com.xiaobai.imagepicker.Util;
 import com.xiaobai.utils.Utils;
 
+import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
 
 /**
  *
@@ -150,18 +171,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         setTabSelection(0);
         //图片选择
         AndroidImagePicker.getInstance().addOnImageCropCompleteListener(this);
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
 
     }
 
@@ -297,26 +306,34 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void onPostFailure(int postId, String msg) {
-
     }
 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == RESULT_OK) {
             if (requestCode == REQ_IMAGE) {
-
                 List<ImageItem> imageList = AndroidImagePicker.getInstance().getSelectedImages();
-//                mAdapter.clear();
-//                mAdapter.addAll(imageList);
-            }/*else if(requestCode == REQ_IMAGE_CROP){
-                Bitmap bmp = (Bitmap)data.getExtras().get("bitmap");
-                Log.i(TAG,"-----"+bmp.getRowBytes());
-            }*/
+
+                //获取图片成功，跳转到编辑页面
+                Intent intent = new Intent(MainActivity.this, PhotoEditActivity.class);
+                intent.putExtra("datas", (Serializable) imageList);
+                startActivity(intent);
+            }
         }
     }
 
+    /**
+     * eventbus
+     */
+    public class MsgEvent {
+        public final List<ImageItem> imageList;
+
+        public MsgEvent(List<ImageItem> imageList) {
+            this.imageList = imageList;
+        }
+    }
 
     @Override
     public void onPictureTakeComplete(String picturePath) {

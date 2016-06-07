@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.xiaobai.activity.PhotoEditActivity">
+
+    <include
+        android:id="@+id/main_title"
+        layout="@layout/view_title" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_photo_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/bottom_photo_edit"
+        android:layout_below="@+id/main_title"
+        android:layout_marginBottom="16dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp" />
+
+    <FrameLayout
+        android:id="@+id/bottom_photo_edit"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/blue"
+        android:layout_alignParentBottom="true" />
+
+</RelativeLayout>

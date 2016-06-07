@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ import java.util.List;
 public class MoreDetailsActivity extends BaseListActivity {
     private MoreDto item;
     private TextView title;
-    private ImageView title_left;
+    private Button title_left;
 
 
     private List<MoreDetailsDto> mDatas = new ArrayList<MoreDetailsDto>();
@@ -46,7 +47,7 @@ public class MoreDetailsActivity extends BaseListActivity {
 
     private void initView() {
         title = (TextView) findViewById(R.id.main_title_tv);
-        title_left = (ImageView) findViewById(R.id.main_title_left);
+        title_left = (Button) findViewById(R.id.main_title_left);
 
         title.setText(item.Name);
         title_left.setVisibility(View.VISIBLE);
