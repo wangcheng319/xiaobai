@@ -1,5 +1,6 @@
 package com.xiaobai.fragment;
 
+import com.qiniu.android.storage.UploadManager;
 import com.xiaobai.listview.IXViewListener;
 import com.xiaobai.listview.XListView;
 
@@ -12,7 +13,7 @@ public class BaseListFragment extends BaseFragment implements IXViewListener {
 
     @Override
     public void onRefresh() {
-        if(isLoading){
+        if (isLoading) {
             return;
         }
         isLoading = true;
@@ -20,21 +21,21 @@ public class BaseListFragment extends BaseFragment implements IXViewListener {
 
     @Override
     public void onLoadMore() {
-        if(isLoading){
+        if (isLoading) {
             return;
         }
         isLoading = true;
     }
 
-    public XListView getXList(){
+    public XListView getXList() {
         return null;
     }
 
     @Override
-    public void onPostSuccess(int postId,String result) {
+    public void onPostSuccess(int postId, String result) {
         isLoading = false;
 
-        if(getXList()!=null){
+        if (getXList() != null) {
             getXList().stopRefresh();
             getXList().stopLoadMore();
             getXList().setRefreshTime(getTime());
@@ -43,10 +44,10 @@ public class BaseListFragment extends BaseFragment implements IXViewListener {
     }
 
     @Override
-    public void onPostFailure(int postId,String msg) {
+    public void onPostFailure(int postId, String msg) {
         isLoading = false;
 
-        if(getXList()!=null){
+        if (getXList() != null) {
             getXList().stopRefresh();
             getXList().stopLoadMore();
             getXList().setRefreshTime(getTime());

@@ -35,6 +35,7 @@ public class MoreFragment extends BaseFragment {
     private RecyclerView recyclerView;
     private MoreAdapter adapter;
     private List<MoreDto> moreDtos = new ArrayList<MoreDto>();
+
     public MoreFragment() {
         // Required empty public constructor
     }
@@ -89,6 +90,7 @@ public class MoreFragment extends BaseFragment {
                 startActivity(intent);
             }
         });
+
     }
 
 

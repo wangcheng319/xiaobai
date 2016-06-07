@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
+import com.xiaobai.app.App;
 import com.xiaobai.application.R;
 import com.xiaobai.dto.User;
 import com.xiaobai.utils.Utils;
@@ -104,7 +105,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 .add("Version", "01")
                 .add("c_device", "device_system：" + "android" + "system_version：" + b + phoneName)
                 .build();
-        onRequest(101, url, formBody,"");
+        onRequest(101, url, formBody, App.token);
 
     }
 
@@ -122,9 +123,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
         try {
             User user = gson.fromJson(jsonObject.getString("data"), User.class);
+            App.userid = user.userId;
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+
+        finish();
     }
 
     @Override

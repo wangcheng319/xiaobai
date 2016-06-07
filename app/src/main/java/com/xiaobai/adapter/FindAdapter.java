@@ -30,8 +30,6 @@ public class FindAdapter extends BaseAdapter {
     private Context mContext;
     private List<HtoDto> mDatas;
     private LayoutInflater mInflater;
-    String[] colors = new String[]{"#a04940", "#ee8d7b", "#7065a3", "#85916d", "#c1d8ac", "#8c8684", "#c1d8ac",
-            "#c18dac", "#93b69c", "#c85179", "#9dc357", "#FFE4B5", "#7fcce3", "#73b8e2", "#cbb994", "#5b7e91"};
 
     public FindAdapter(Context context, List<HtoDto> datas) {
         this.mContext = context;
@@ -77,32 +75,10 @@ public class FindAdapter extends BaseAdapter {
 
         holder.name.setText(item.NickName);
         holder.time.setText(item.CreateTime);
-        //生成一个随机色块
-        final int random = new Random().nextInt(16);
-        Drawable drawable = new Drawable() {
-            @Override
-            public void draw(Canvas canvas) {
-                canvas.drawColor(Color.parseColor(colors[random]));
-            }
 
-            @Override
-            public void setAlpha(int alpha) {
-
-            }
-
-            @Override
-            public void setColorFilter(ColorFilter colorFilter) {
-
-            }
-
-            @Override
-            public int getOpacity() {
-                return 0;
-            }
-        };
         Glide.with(mContext)
                 .load(item.urls.get(0))
-                .placeholder(drawable)
+                .placeholder(Utils.makeDrable())
                 .crossFade()
                 .centerCrop()
                 .into(holder.photo);

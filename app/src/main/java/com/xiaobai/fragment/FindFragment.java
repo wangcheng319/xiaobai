@@ -91,13 +91,13 @@ public class FindFragment extends BaseListFragment {
 
     @Override
     public void onPostFailure(int postId, String msg) {
-        setLoadingFinish();
-        if (listView != null && (lists.size() - 1) / pageSize < pageNo) {
-            listView.setPullLoadEnable(true);
-            pageNo++;
-        } else {
-            listView.setPullLoadEnable(false);
-        }
+//        setLoadingFinish();
+//        if (listView != null && (lists.size() - 1) / pageSize < pageNo) {
+//            listView.setPullLoadEnable(true);
+//            pageNo++;
+//        } else {
+//            listView.setPullLoadEnable(false);
+//        }
 
     }
 

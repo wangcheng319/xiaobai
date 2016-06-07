@@ -1,12 +1,15 @@
 package com.xiaobai.activity;
 
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,6 +24,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
+import com.xiaobai.app.App;
 import com.xiaobai.application.R;
 import com.xiaobai.utils.Utils;
 
@@ -33,8 +37,8 @@ import java.io.IOException;
  * Created by wangc on 2016/5/19.
  */
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
-    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
-    //      public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
+    //    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
+    public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
     private SystemBarTintManager tintManager;
 
     Handler handler = new Handler(new Handler.Callback() {
@@ -89,6 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
+                .addHeader("token",header)
                 .build();
 
         Call call = client.newCall(request);
@@ -106,7 +111,13 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                 if (progressDialog.isShowing()) {
                     progressDialog.cancel();
                 }
-                Log.e("token", response.header("token") + "");
+                String token = "";
+                if (!TextUtils.isEmpty(response.header("token"))) {
+                    token = response.header("token");
+                    Log.e("token", token);
+                    App.token = token;
+                }
+
                 String res = response.body().string();
                 JSONObject jsonObject = null;
                 String data = null;

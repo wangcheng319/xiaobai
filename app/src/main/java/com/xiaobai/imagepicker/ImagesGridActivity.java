@@ -125,9 +125,9 @@ public class ImagesGridActivity extends FragmentActivity implements View.OnClick
                 finish();
                 break;
             case R.id.btn_ok:
-                finish();
                 androidImagePicker.notifyOnImagePickComplete(androidImagePicker.getSelectedImages());
-                //setResult(RESULT_OK);
+                setResult(RESULT_OK);
+                finish();
                 break;
             default:
                 break;

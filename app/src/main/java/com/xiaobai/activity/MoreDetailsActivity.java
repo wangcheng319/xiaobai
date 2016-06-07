@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
 import com.xiaobai.adapter.FindAdapter;
 import com.xiaobai.adapter.MoreDetailsAdapter;
+import com.xiaobai.app.App;
 import com.xiaobai.application.R;
 import com.xiaobai.dto.HtoDto;
 import com.xiaobai.dto.MoreDetailsDto;
@@ -25,7 +27,7 @@ import java.util.List;
 public class MoreDetailsActivity extends BaseListActivity {
     private MoreDto item;
     private TextView title;
-    private ImageView title_left;
+    private Button title_left;
 
 
     private List<MoreDetailsDto> mDatas = new ArrayList<MoreDetailsDto>();
@@ -46,7 +48,7 @@ public class MoreDetailsActivity extends BaseListActivity {
 
     private void initView() {
         title = (TextView) findViewById(R.id.main_title_tv);
-        title_left = (ImageView) findViewById(R.id.main_title_left);
+        title_left = (Button) findViewById(R.id.main_title_left);
 
         title.setText(item.Name);
         title_left.setVisibility(View.VISIBLE);
@@ -74,7 +76,7 @@ public class MoreDetailsActivity extends BaseListActivity {
                 .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
-        onRequest(101, url, formBody, "");
+        onRequest(101, url, formBody, App.token);
     }
 
     @Override
@@ -141,7 +143,7 @@ public class MoreDetailsActivity extends BaseListActivity {
                 .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
-        onRequest(101, url, formBody, "");
+        onRequest(101, url, formBody, App.token);
     }
 
     @Override
@@ -154,6 +156,6 @@ public class MoreDetailsActivity extends BaseListActivity {
                 .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
-        onRequest(101, url, formBody, "");
+        onRequest(101, url, formBody, App.token);
     }
 }

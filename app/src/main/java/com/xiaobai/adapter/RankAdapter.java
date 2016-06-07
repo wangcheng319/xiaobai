@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.xiaobai.application.R;
 import com.xiaobai.dto.RankDto;
+import com.xiaobai.utils.Utils;
 
 import java.util.List;
 import java.util.Random;
@@ -27,8 +28,6 @@ public class RankAdapter extends BaseAdapter {
     private List<RankDto> datas;
     private Context mContext;
     private LayoutInflater inflater;
-    String[] colors = new String[]{"#a04940", "#ee8d7b", "#7065a3", "#85916d", "#c1d8ac", "#8c8684", "#c1d8ac",
-            "#c18dac", "#93b69c", "#c85179", "#9dc357", "#FFE4B5", "#7fcce3", "#73b8e2", "#cbb994", "#5b7e91"};
 
     public RankAdapter(Context mContext, List<RankDto> datas) {
         this.mContext = mContext;
@@ -74,80 +73,9 @@ public class RankAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        //生成一个随机色块
-        final int random = new Random().nextInt(16);
-        Drawable drawable = new Drawable() {
-            @Override
-            public void draw(Canvas canvas) {
-                canvas.drawColor(Color.parseColor(colors[random]));
-            }
-
-            @Override
-            public void setAlpha(int alpha) {
-
-            }
-
-            @Override
-            public void setColorFilter(ColorFilter colorFilter) {
-
-            }
-
-            @Override
-            public int getOpacity() {
-                return 0;
-            }
-        };
-
-        //生成一个随机色块
-        final int random1 = new Random().nextInt(16);
-        Drawable drawable1 = new Drawable() {
-            @Override
-            public void draw(Canvas canvas) {
-                canvas.drawColor(Color.parseColor(colors[random1]));
-            }
-
-            @Override
-            public void setAlpha(int alpha) {
-
-            }
-
-            @Override
-            public void setColorFilter(ColorFilter colorFilter) {
-
-            }
-
-            @Override
-            public int getOpacity() {
-                return 0;
-            }
-        };
-
-        //生成一个随机色块
-        final int random2 = new Random().nextInt(16);
-        Drawable drawable2 = new Drawable() {
-            @Override
-            public void draw(Canvas canvas) {
-                canvas.drawColor(Color.parseColor(colors[random2]));
-            }
-
-            @Override
-            public void setAlpha(int alpha) {
-
-            }
-
-            @Override
-            public void setColorFilter(ColorFilter colorFilter) {
-
-            }
-
-            @Override
-            public int getOpacity() {
-                return 0;
-            }
-        };
-        holder.image1.setBackgroundDrawable(drawable);
-        holder.image2.setBackgroundDrawable(drawable1);
-        holder.image3.setBackgroundDrawable(drawable2);
+        holder.image1.setBackgroundDrawable(Utils.makeDrable());
+        holder.image2.setBackgroundDrawable(Utils.makeDrable());
+        holder.image3.setBackgroundDrawable(Utils.makeDrable());
 
         RankDto item = (RankDto) getItem(position);
 
@@ -162,53 +90,51 @@ public class RankAdapter extends BaseAdapter {
                 .centerCrop()
                 .into(holder.photo);
 
-        if (item.urls.size() == 1) {
+        if (item.urls != null && item.urls.size() == 1) {
             Glide.with(mContext)
                     .load(item.urls.get(0))
-                    .placeholder(drawable)
+                    .placeholder(Utils.makeDrable())
                     .crossFade()
                     .centerCrop()
                     .into(holder.image1);
 
-        } else if (item.urls.size() == 2) {
+        } else if (item.urls != null && item.urls.size() == 2) {
             Glide.with(mContext)
                     .load(item.urls.get(0))
-                    .placeholder(drawable)
+                    .placeholder(Utils.makeDrable())
                     .crossFade()
                     .centerCrop()
                     .into(holder.image1);
 
             Glide.with(mContext)
                     .load(item.urls.get(1))
-                    .placeholder(drawable1)
+                    .placeholder(Utils.makeDrable())
                     .crossFade()
                     .centerCrop()
                     .into(holder.image2);
 
-        } else if (item.urls.size() == 3) {
+        } else if (item.urls != null && item.urls.size() == 3) {
             Glide.with(mContext)
                     .load(item.urls.get(0))
-                    .placeholder(drawable)
+                    .placeholder(Utils.makeDrable())
                     .crossFade()
                     .centerCrop()
                     .into(holder.image1);
 
             Glide.with(mContext)
                     .load(item.urls.get(1))
-                    .placeholder(drawable1)
+                    .placeholder(Utils.makeDrable())
                     .crossFade()
                     .centerCrop()
                     .into(holder.image2);
             Glide.with(mContext)
                     .load(item.urls.get(2))
-                    .placeholder(drawable2)
+                    .placeholder(Utils.makeDrable())
                     .crossFade()
                     .centerCrop()
                     .into(holder.image3);
 
         }
-
-
         return convertView;
     }
 
