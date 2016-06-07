@@ -115,13 +115,6 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
                     token = response.header("token");
                     Log.e("token", token);
                 }
-                // 获取SharedPreferences对象
-                SharedPreferences sp = getSharedPreferences("token_save",
-                        Activity.MODE_PRIVATE);
-                // 获取Editor对象
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putString("token", token);
-                editor.commit();
                 String res = response.body().string();
                 JSONObject jsonObject = null;
                 String data = null;
