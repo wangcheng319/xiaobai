@@ -70,6 +70,7 @@ public class UpLoadAdapter extends BaseAdapter {
                 .crossFade()
                 .centerCrop()
                 .into(holder.photo);
+
         return convertView;
 
     }
