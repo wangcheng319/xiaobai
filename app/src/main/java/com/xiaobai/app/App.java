@@ -39,6 +39,7 @@ public class App extends Application {
     private PushAgent mPushAgent;
     public User user;
     public static double userid;
+    public static String token = "";
 
 
     public static App getInstance() {

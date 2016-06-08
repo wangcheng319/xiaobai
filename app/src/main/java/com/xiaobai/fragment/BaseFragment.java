@@ -34,8 +34,8 @@ import okhttp3.internal.framed.Header;
  * Created by wangc on 2016/5/19.
  */
 public abstract class BaseFragment extends Fragment {
-    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
-//        public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
+//    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
+        public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
 
     Handler handler = new Handler(new Handler.Callback() {
         @Override
@@ -71,7 +71,7 @@ public abstract class BaseFragment extends Fragment {
         TextView msg = (TextView) progressDialog.findViewById(R.id.id_tv_loadingmsg);
         msg.setTextSize(12);
         msg.setText("卖力加载中...");
-        progressDialog.show();
+//        progressDialog.show();
 
 
         Request request = new Request.Builder()

@@ -105,7 +105,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 .add("Version", "01")
                 .add("c_device", "device_system：" + "android" + "system_version：" + b + phoneName)
                 .build();
-        onRequest(101, url, formBody, "");
+        onRequest(101, url, formBody, App.token);
 
     }
 

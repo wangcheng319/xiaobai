@@ -117,16 +117,20 @@ public class PhotoEditActivity extends BaseActivity {
                     uploadToken = json.getString("uploadToken");
 
 
+                    //上传图片到七牛
                     UploadManager uploadManager = new UploadManager();
-                    File file = new File(imageList.get(0).path);
-                    uploadManager.put(file, "test", uploadToken,
-                            new UpCompletionHandler() {
-                                @Override
-                                public void complete(String key, ResponseInfo info, JSONObject res) {
-                                    //  res 包含hash、key等信息，具体字段取决于上传策略的设置。
-                                    Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + res);
-                                }
-                            }, null);
+                    for (int i = 0; i < imageList.size(); i++) {
+                        File file = new File(imageList.get(i).path);
+                        uploadManager.put(file, imageList.get(i).path, uploadToken,
+                                new UpCompletionHandler() {
+                                    @Override
+                                    public void complete(String key, ResponseInfo info, JSONObject res) {
+                                        //  res 包含hash、key等信息，具体字段取决于上传策略的设置。
+                                        Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + res);
+                                    }
+                                }, null);
+                    }
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

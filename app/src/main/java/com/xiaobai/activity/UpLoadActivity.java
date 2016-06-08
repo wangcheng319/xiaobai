@@ -11,13 +11,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
 import com.xiaobai.adapter.UpLoadAdapter;
+import com.xiaobai.app.App;
 import com.xiaobai.application.R;
 import com.xiaobai.imagepicker.ImageItem;
 import com.xiaobai.utils.Utils;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,6 +122,25 @@ public class UpLoadActivity extends BaseActivity {
                 .add("c_url", imageList.get(0).path)
                 .build();
 
-        onRequest(101, url, requestBody, "");
+
+        com.squareup.okhttp.OkHttpClient client = new com.squareup.okhttp.OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .addHeader("token", App.token)
+                .build();
+
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+
+            }
+        });
     }
 }

@@ -14,6 +14,7 @@ import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.RequestBody;
 import com.xiaobai.adapter.FindAdapter;
 import com.xiaobai.adapter.MoreDetailsAdapter;
+import com.xiaobai.app.App;
 import com.xiaobai.application.R;
 import com.xiaobai.dto.HtoDto;
 import com.xiaobai.dto.MoreDetailsDto;
@@ -75,7 +76,7 @@ public class MoreDetailsActivity extends BaseListActivity {
                 .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
-        onRequest(101, url, formBody, "");
+        onRequest(101, url, formBody, App.token);
     }
 
     @Override
@@ -142,7 +143,7 @@ public class MoreDetailsActivity extends BaseListActivity {
                 .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
-        onRequest(101, url, formBody, "");
+        onRequest(101, url, formBody, App.token);
     }
 
     @Override
@@ -155,6 +156,6 @@ public class MoreDetailsActivity extends BaseListActivity {
                 .add("c_currentPage", pageNo + "")
                 .add("Version", "01")
                 .build();
-        onRequest(101, url, formBody, "");
+        onRequest(101, url, formBody, App.token);
     }
 }
