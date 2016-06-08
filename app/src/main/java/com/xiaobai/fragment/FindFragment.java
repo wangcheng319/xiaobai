@@ -130,7 +130,7 @@ public class FindFragment extends BaseListFragment {
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), FindDetailsActivity.class);
                 Bundle mBundle = new Bundle();
-                mBundle.putSerializable("data", mDatas.get(position));
+                mBundle.putSerializable("data", mDatas.get(position - 1));
                 intent.putExtras(mBundle);
                 startActivity(intent);
             }

@@ -763,4 +763,18 @@ public class Utils {
 
         return drawable;
     }
+
+    /**
+     * 生成一个随机色块
+     *
+     * @return
+     */
+    public static String makeColor() {
+        final String[] colors = new String[]{"#a04940", "#ee8d7b", "#7065a3", "#85916d", "#c1d8ac", "#8c8684", "#c1d8ac",
+                "#c18dac", "#93b69c", "#c85179", "#9dc357", "#FFE4B5", "#7fcce3", "#73b8e2", "#cbb994", "#5b7e91"};
+
+        final int random = new Random().nextInt(16);
+
+        return colors[random];
+    }
 }

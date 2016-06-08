@@ -3,16 +3,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#f3f3f3"
+    android:orientation="vertical"
     tools:context="com.xiaobai.activity.FindDetailsActivity">
 
     <include
         android:id="@+id/main_title"
         layout="@layout/view_title" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/details_list"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/details_header"
+                layout="@layout/layout_find_details_header" />
+
+            <!--<com.xiaobai.view.MyListView
+                android:id="@+id/details_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />-->
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

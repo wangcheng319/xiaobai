@@ -37,8 +37,8 @@ import java.io.IOException;
  * Created by wangc on 2016/5/19.
  */
 public abstract class BaseActivity extends AppCompatActivity implements View.OnClickListener {
-    //    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
-    public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
+    public static final String url = "http://139.196.203.173:8080/qianyuApp/requestservices.action";//正式
+    //    public static final String url = "http://192.168.31.200:8080/qianyuApp/requestservices.action";
     private SystemBarTintManager tintManager;
 
     Handler handler = new Handler(new Handler.Callback() {
@@ -93,7 +93,7 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
-                .addHeader("token",header)
+                .addHeader("token", header)
                 .build();
 
         Call call = client.newCall(request);
