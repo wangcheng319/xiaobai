@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
 import com.xiaobai.application.R;
@@ -41,18 +43,20 @@ public class MineFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        loadViewForCode();
-        scrollView = (PullToZoomScrollViewEx) rootView.findViewById(R.id.mine_scrollview);
-    }
+        scrollView = (PullToZoomScrollViewEx) rootView.findViewById(R.id.mine_scroll);
 
-    private void loadViewForCode() {
-
-        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.view_more_list_item, null, false);
-        View zoomView = LayoutInflater.from(getActivity()).inflate(R.layout.activity_login, null, false);
-        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.view_title, null, false);
-        scrollView.setHeaderView(headView);
+        View zoomView = LayoutInflater.from(getActivity()).inflate(R.layout.view_mine_header, null, false);
+        View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.view_mine_content, null, false);
         scrollView.setZoomView(zoomView);
         scrollView.setScrollContentView(contentView);
+
+//        DisplayMetrics localDisplayMetrics = new DisplayMetrics();
+//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
+//        int mScreenHeight = localDisplayMetrics.heightPixels;
+//        int mScreenWidth = localDisplayMetrics.widthPixels;
+//        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
+//        scrollView.setHeaderLayoutParams(localObject);
+
     }
 
     @Override

@@ -81,6 +81,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
     private View tab_rank;
     private View tab_mine;
     private TextView main_title_tv;
+    private View main_title_left;
+    private View main_title_right;
 
     private FragmentManager mFragmentManager;
 
@@ -158,6 +160,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         tab_mine = findViewById(R.id.home_tab_mine_layout);
 
         main_title_tv = (TextView) findViewById(R.id.main_title_tv);
+        main_title_left = findViewById(R.id.main_title_left);
+        main_title_right = findViewById(R.id.main_title_right);
 
 
         tab_mine.setOnClickListener(this);
@@ -165,6 +169,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         tab_find.setOnClickListener(this);
         tab_more.setOnClickListener(this);
         tab_rank.setOnClickListener(this);
+
+        main_title_left.setOnClickListener(this);
+        main_title_right.setOnClickListener(this);
 
         mFragmentManager = getSupportFragmentManager();
 
@@ -179,9 +186,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.home_tab_find_layout:
                 setTabSelection(0);
+                main_title_left.setVisibility(View.GONE);
+                main_title_right.setVisibility(View.GONE);
                 break;
             case R.id.home_tab_more_layout:
                 setTabSelection(1);
+                main_title_left.setVisibility(View.GONE);
+                main_title_right.setVisibility(View.GONE);
                 break;
             case R.id.main_add:
 //                setTabSelection(2);
@@ -194,10 +205,20 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.home_tab_rank_layout:
                 setTabSelection(3);
+                main_title_left.setVisibility(View.GONE);
+                main_title_right.setVisibility(View.GONE);
                 break;
             case R.id.home_tab_mine_layout:
-//                setTabSelection(4);
-                startActivity(new Intent(this, LoginActivity.class));
+                setTabSelection(4);
+                main_title_left.setVisibility(View.VISIBLE);
+                main_title_right.setVisibility(View.VISIBLE);
+//                startActivity(new Intent(this, LoginActivity.class));
+                break;
+            case R.id.main_title_left:
+                Toast.makeText(MainActivity.this,"消息",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.main_title_right:
+                startActivity(new Intent(this,SettingActivity.class));
                 break;
 
 

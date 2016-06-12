@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.xiaobai.application">
 
     <!-- 相应权限配置 -->
@@ -28,7 +29,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon">
         <activity
             android:name="com.xiaobai.activity.SplashScreenActivity"
             android:theme="@style/AppStartTheme">
@@ -72,7 +74,7 @@
         <activity android:name="com.xiaobai.activity.RankDetailsActivity" />
         <activity android:name="com.xiaobai.activity.MoreDetailsActivity" />
         <activity android:name="com.xiaobai.activity.PhotoEditActivity" />
-        <activity android:name="com.xiaobai.activity.UpLoadActivity"/>
+        <activity android:name="com.xiaobai.activity.UpLoadActivity" />
         <!-- 图片选择 -->
         <activity android:name="com.xiaobai.imagepicker.ImagesGridActivity" />
         <activity android:name="com.xiaobai.imagepicker.ImageCropActivity" />
@@ -83,6 +85,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
+        <activity android:name="com.xiaobai.activity.SettingActivity"></activity>
     </application>
 
 </manifest>
