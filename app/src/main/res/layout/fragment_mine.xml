@@ -4,11 +4,12 @@
     android:layout_height="match_parent"
     tools:context="com.xiaobai.fragment.MineFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.ecloud.pulltozoomview.PullToZoomScrollViewEx
+        android:id="@+id/mine_scrollview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="mine" />
+        android:layout_height="wrap_content">
+
+    </com.ecloud.pulltozoomview.PullToZoomScrollViewEx>
+
 
 </RelativeLayout>
