@@ -32,4 +32,11 @@
 
     </LinearLayout>
 
+    <com.xiaobai.view.MyListView
+        android:id="@+id/mine_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/blue" />
+
+
 </LinearLayout>

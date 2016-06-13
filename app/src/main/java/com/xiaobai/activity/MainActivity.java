@@ -20,6 +20,7 @@ import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -186,13 +187,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
         switch (v.getId()) {
             case R.id.home_tab_find_layout:
                 setTabSelection(0);
-                main_title_left.setVisibility(View.GONE);
-                main_title_right.setVisibility(View.GONE);
                 break;
             case R.id.home_tab_more_layout:
                 setTabSelection(1);
-                main_title_left.setVisibility(View.GONE);
-                main_title_right.setVisibility(View.GONE);
                 break;
             case R.id.main_add:
 //                setTabSelection(2);
@@ -205,20 +202,16 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.home_tab_rank_layout:
                 setTabSelection(3);
-                main_title_left.setVisibility(View.GONE);
-                main_title_right.setVisibility(View.GONE);
                 break;
             case R.id.home_tab_mine_layout:
                 setTabSelection(4);
-                main_title_left.setVisibility(View.VISIBLE);
-                main_title_right.setVisibility(View.VISIBLE);
 //                startActivity(new Intent(this, LoginActivity.class));
                 break;
             case R.id.main_title_left:
-                Toast.makeText(MainActivity.this,"消息",Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "消息", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.main_title_right:
-                startActivity(new Intent(this,SettingActivity.class));
+                startActivity(new Intent(this, SettingActivity.class));
                 break;
 
 
@@ -233,6 +226,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener,
      * @param index
      */
     private void setTabSelection(int index) {
+
+
+        if (index == 4) {
+            main_title_left.setVisibility(View.VISIBLE);
+            main_title_right.setVisibility(View.VISIBLE);
+            main_title_tv.setVisibility(View.GONE);
+        } else {
+            main_title_left.setVisibility(View.GONE);
+            main_title_right.setVisibility(View.GONE);
+            main_title_tv.setVisibility(View.VISIBLE);
+        }
         // 设置选中状态显示当前内容视图
         main_title_tv.setText(titleArray[index]);
 //        int count = mTabHost.getTabWidget().getChildCount();
