@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.SimpleAdapter;
 
 import com.ecloud.pulltozoomview.PullToZoomScrollViewEx;
 import com.google.gson.Gson;
@@ -127,9 +129,17 @@ public class MineFragment extends BaseFragment {
         scrollView.setScrollContentView(contentView);
 
 
-        mineAdapter = new MineAdapter(getActivity(),datas);
+        mineAdapter = new MineAdapter(getActivity(), datas);
         listview = (MyListView) contentView.findViewById(R.id.mine_list);
-        listview.setAdapter(mineAdapter);
+//        listview.setAdapter(mineAdapter);
+
+        List<String> da = new ArrayList<String>();
+        for (int i = 0; i < 50; i++) {
+            da.add("第" + i + "");
+        }
+        ArrayAdapter<String> myArrayAdapter =
+                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, da);
+        listview.setAdapter(myArrayAdapter);
     }
 
     // 设置头部的View的宽高。
@@ -154,11 +164,11 @@ public class MineFragment extends BaseFragment {
                 break;
             case 103:
                 Log.d("103", msg);
-                Gson gson = new Gson();
-                java.lang.reflect.Type type2 = new TypeToken<List<MineDto>>() {
-                }.getType();
-                datas = gson.fromJson(msg, type2);
-                mineAdapter.notifyDataSetChanged();
+//                Gson gson = new Gson();
+//                java.lang.reflect.Type type2 = new TypeToken<List<MineDto>>() {
+//                }.getType();
+//                datas = gson.fromJson(msg, type2);
+//                mineAdapter.notifyDataSetChanged();
                 break;
         }
 
