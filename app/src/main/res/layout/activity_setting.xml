@@ -11,11 +11,11 @@
         android:id="@+id/main_title"
         layout="@layout/view_title" />
 
-    <Button
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.6dp"
         android:layout_marginTop="32dp"
-        android:background="#f9f9f9" />
+        android:background="@color/pull_view_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,11 +37,11 @@
             android:text="个人信息"
             android:textSize="14sp" />
 
-        <Button
+        <View
             android:layout_width="match_parent"
             android:layout_height="0.1dp"
             android:layout_marginLeft="42dp"
-            android:background="#f3f3f3" />
+            android:background="@color/pull_view_text" />
 
         <TextView
             android:id="@+id/setting_passwd"
@@ -59,17 +59,17 @@
     </LinearLayout>
 
 
-    <Button
+    <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
-        android:background="#f3f3f3" />
+        android:background="@color/pull_view_text" />
 
 
-    <Button
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.6dp"
         android:layout_marginTop="32dp"
-        android:background="#f3f3f3" />
+        android:background="@color/pull_view_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,11 +91,11 @@
             android:text="水印"
             android:textSize="14sp" />
 
-        <Button
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0.1dp"
+            android:layout_height="0.6dp"
             android:layout_marginLeft="42dp"
-            android:background="#f3f3f3" />
+            android:background="@color/pull_view_text" />
 
         <TextView
             android:id="@+id/setting_cache"
@@ -112,17 +112,17 @@
             android:textSize="14sp" />
     </LinearLayout>
 
-    <Button
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:background="#f3f3f3" />
+        android:layout_height="0.6dp"
+        android:background="@color/pull_view_text" />
 
 
-    <Button
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
+        android:layout_height="0.6dp"
         android:layout_marginTop="32dp"
-        android:background="#f3f3f3" />
+        android:background="@color/pull_view_text" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -144,11 +144,11 @@
             android:text="关于小白"
             android:textSize="14sp" />
 
-        <Button
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0.1dp"
+            android:layout_height="0.6dp"
             android:layout_marginLeft="42dp"
-            android:background="#f3f3f3" />
+            android:background="@color/pull_view_text" />
 
         <TextView
             android:id="@+id/setting_feedback"
@@ -164,11 +164,11 @@
             android:text="意见反馈"
             android:textSize="14sp" />
 
-        <Button
+        <View
             android:layout_width="match_parent"
-            android:layout_height="0.1dp"
+            android:layout_height="0.6dp"
             android:layout_marginLeft="42dp"
-            android:background="#f3f3f3" />
+            android:background="@color/pull_view_text" />
 
 
         <TextView
@@ -187,10 +187,10 @@
 
     </LinearLayout>
 
-    <Button
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:background="#f3f3f3" />
+        android:layout_height="0.6dp"
+        android:background="@color/pull_view_text" />
 
     <Button
         android:id="@+id/setting_logout"

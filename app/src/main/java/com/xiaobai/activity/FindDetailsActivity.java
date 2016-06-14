@@ -1,5 +1,7 @@
 package com.xiaobai.activity;
 
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
@@ -12,7 +14,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -95,12 +103,12 @@ public class FindDetailsActivity extends BaseListActivity {
         setDatas(item);
     }
 
-    private void setDatas(FindDetailsDto item) {
+    private void setDatas(final FindDetailsDto item) {
 //        datas.addAll(item.url);
 //        adapter.notifyDataSetChanged();
 
         for (int i = 0; i < item.url.size(); i++) {
-            ImageView imageView = new ImageView(FindDetailsActivity.this);
+            final ImageView imageView = new ImageView(FindDetailsActivity.this);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             params.setMargins(16, 16, 16, 16);
             imageView.setLayoutParams(params);

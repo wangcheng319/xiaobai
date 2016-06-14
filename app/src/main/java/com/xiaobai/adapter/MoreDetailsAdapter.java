@@ -1,9 +1,11 @@
 package com.xiaobai.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.xiaobai.application.R;
 import com.xiaobai.dto.HtoDto;
@@ -59,7 +66,7 @@ public class MoreDetailsAdapter extends BaseAdapter {
             return convertView;
         }
 
-        ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.layout_more_details_item, null);
             holder = new ViewHolder();
@@ -71,16 +78,27 @@ public class MoreDetailsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        MoreDetailsDto item = mDatas.get(position);
+        final MoreDetailsDto item = mDatas.get(position);
 
         holder.name.setText(item.NickName);
         holder.time.setText(item.CreateTime);
-        Glide.with(mContext)
-                .load(item.urls.get(0))
-                .placeholder(Utils.makeDrable())
-                .crossFade()
-                .centerCrop()
-                .into(holder.photo);
+
+
+        RequestQueue mQueue = Volley.newRequestQueue(mContext);
+        ImageRequest imageRequest = new ImageRequest(
+                item.urls.get(0),
+                new Response.Listener<Bitmap>() {
+                    @Override
+                    public void onResponse(Bitmap response) {
+//                        imageView.setImageBitmap(response);
+                    }
+                }, 0, 0, Bitmap.Config.RGB_565, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        mQueue.add(imageRequest);
         return convertView;
 
     }

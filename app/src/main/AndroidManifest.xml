@@ -23,6 +23,8 @@
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
 
     <application
         android:allowBackup="true"
@@ -45,10 +47,6 @@
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
         -->
 
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
         <service
             android:name="com.xiaobai.umeng.MyPushIntentService"
             android:process=":push" />
@@ -63,6 +61,7 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="573b110be0f55a6cf60018f5" />
+        <!--友盟推送-->
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
             android:value="7c165fb04cd5b157ce72d6d5913bf22d" />
@@ -79,17 +78,64 @@
         <activity android:name="com.xiaobai.imagepicker.ImagesGridActivity" />
         <activity android:name="com.xiaobai.imagepicker.ImageCropActivity" />
         <activity android:name="com.xiaobai.imagepicker.ImagePreviewActivity" />
-        //Sharedsdk 短信验证
-        <activity
-            android:name="com.mob.tools.MobUIShell"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
         <activity android:name="com.xiaobai.activity.SettingActivity" />
         <activity android:name="com.xiaobai.activity.PersonalInfoActivity" />
         <activity android:name="com.xiaobai.activity.ChangePasswdActivity" />
         <activity android:name="com.xiaobai.activity.AboutActivity" />
         <activity android:name="com.xiaobai.activity.FeedBackActivity"></activity>
+
+
+        <!--camera360-->
+        <meta-data
+            android:name="EDIT_SDK_KEY"
+            android:value="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" />
+        <meta-data
+            android:name="BD_APP_ID"
+            android:value="ea8d04692735bc1f" />
+
+        <meta-data
+            android:name="BD_APP_SECRET"
+            android:value="vCGG9QZ94tcGxTjangCc_b_VuXwmfGd2" />
+
+        <activity
+            android:name="us.pinguo.edit.sdk.PGEditActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+
+        <service
+            android:name="us.pinguo.bigdata.BDUpService"
+            android:process=":bdupload"></service>
+
+        <receiver android:name="us.pinguo.bigdata.BDAlarmReceiver">
+            <intent-filter>
+                <action android:name="bd_alarm" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

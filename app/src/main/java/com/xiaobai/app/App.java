@@ -29,7 +29,9 @@ import org.json.JSONObject;
 import org.xutils.BuildConfig;
 import org.xutils.x;
 
-import cn.smssdk.SMSSDK;
+import us.pinguo.edit.sdk.PGEditImageLoader;
+import us.pinguo.edit.sdk.base.PGEditSDK;
+
 
 /**
  * Created by wangc on 2016/5/11.
@@ -54,16 +56,17 @@ public class App extends Application {
         super.onCreate();
         setUmeng();
         setQiniu();
-        setSharedsdk();
-
+        setCamera360();
     }
 
     /**
-     * 短信验证
+     * camera360初始化
      */
-    private void setSharedsdk() {
-        SMSSDK.initSDK(this, "135d671a4ffdc", "2cddd5fb4a9439e904501e0527d16a27");
+    private void setCamera360() {
+        PGEditImageLoader.initImageLoader(this);
+        PGEditSDK.instance().initSDK(this);
     }
+
 
     /**
      * 七牛图片设置
@@ -78,23 +81,7 @@ public class App extends Application {
 //                .recorder(recorder, keyGen)  // keyGen 分片上传时，生成标识符，用于片记录器区分是那个文件的上传记录
                 .zone(Zone.zone0) // 设置区域，指定不同区域的上传域名、备用域名、备用IP。默认 Zone.zone0
                 .build();
-// 重用 uploadManager。一般地，只需要创建一个 uploadManager 对象
-
-
-        // 重用 uploadManager。一般地，只需要创建一个 uploadManager 对象
         UploadManager uploadManager = new UploadManager();
-//        data = <File对象、或 文件路径、或 字节数组>
-//        String key = <指定七牛服务上的文件名，或 null>;
-//        String token = <从服务端SDK获取>;
-//        uploadManager.put(data, key, token,
-//                new UpCompletionHandler() {
-//                    @Override
-//                    public void complete(String key, ResponseInfo info, JSONObject res) {
-//                        //  res 包含hash、key等信息，具体字段取决于上传策略的设置。
-//                        Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + res);
-//                    }
-//                }, null);
-
     }
 
     /**
