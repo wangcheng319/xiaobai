@@ -1,6 +1,7 @@
 package com.xiaobai.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
+import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
 import com.xiaobai.application.R;
 import com.xiaobai.dto.FindDetailsDto;
@@ -52,7 +58,7 @@ public class FindDetailsAdapter extends BaseAdapter {
             return convertView;
         }
 
-        ViewHolder holder;
+        final ViewHolder holder;
         if (convertView == null) {
             convertView = inflater.inflate(R.layout.layout_find_details_item, null);
             holder = new ViewHolder();
@@ -63,15 +69,8 @@ public class FindDetailsAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        String url = datas.get(position);
+        final String url = datas.get(position);
 
-
-        Glide.with(context)
-                .load(url)
-                .placeholder(Utils.makeDrable())
-                .crossFade()
-                .centerCrop()
-                .into(holder.photo);
         return convertView;
 
     }

@@ -133,13 +133,13 @@ public class MineFragment extends BaseFragment {
         listview = (MyListView) contentView.findViewById(R.id.mine_list);
 //        listview.setAdapter(mineAdapter);
 
-        List<String> da = new ArrayList<String>();
-        for (int i = 0; i < 50; i++) {
-            da.add("第" + i + "");
-        }
-        ArrayAdapter<String> myArrayAdapter =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, da);
-        listview.setAdapter(myArrayAdapter);
+//        List<String> da = new ArrayList<String>();
+//        for (int i = 0; i < 50; i++) {
+//            da.add("第" + i + "");
+//        }
+//        ArrayAdapter<String> myArrayAdapter =
+//                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, da);
+//        listview.setAdapter(myArrayAdapter);
     }
 
     // 设置头部的View的宽高。
@@ -164,11 +164,12 @@ public class MineFragment extends BaseFragment {
                 break;
             case 103:
                 Log.d("103", msg);
-//                Gson gson = new Gson();
-//                java.lang.reflect.Type type2 = new TypeToken<List<MineDto>>() {
-//                }.getType();
-//                datas = gson.fromJson(msg, type2);
-//                mineAdapter.notifyDataSetChanged();
+                Gson gson = new Gson();
+                java.lang.reflect.Type type2 = new TypeToken<List<MineDto>>() {
+                }.getType();
+                datas = gson.fromJson(msg, type2);
+                mineAdapter.notifyDataSetChanged();
+                listview.setAdapter(mineAdapter);
                 break;
         }
 
