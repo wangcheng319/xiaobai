@@ -50,7 +50,7 @@ public class ImagePreviewFragment extends Fragment {
     Activity mContext;
 
     ViewPager mViewPager;
-    TouchImageAdapter mAdapter ;
+    TouchImageAdapter mAdapter;
 
     List<ImageItem> mImageList;
     private int mCurrentItemPosition = 0;
@@ -72,9 +72,9 @@ public class ImagePreviewFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_preview,null);
+        View contentView = inflater.inflate(R.layout.fragment_preview, null);
         mImageList = androidImagePicker.getImageItemsOfCurrentImageSet();
-        mCurrentItemPosition = getArguments().getInt(AndroidImagePicker.KEY_PIC_SELECTED_POSITION,0);
+        mCurrentItemPosition = getArguments().getInt(AndroidImagePicker.KEY_PIC_SELECTED_POSITION, 0);
         mImagePresenter = new UilImagePresenter();
         initView(contentView);
         return contentView;
@@ -82,49 +82,50 @@ public class ImagePreviewFragment extends Fragment {
 
     private void initView(View contentView) {
         mViewPager = (ViewPager) contentView.findViewById(R.id.viewpager);
-        mAdapter = new TouchImageAdapter(((FragmentActivity)mContext).getSupportFragmentManager());
+        mAdapter = new TouchImageAdapter(((FragmentActivity) mContext).getSupportFragmentManager());
         mViewPager.setAdapter(mAdapter);
         mViewPager.setCurrentItem(mCurrentItemPosition, false);
         ImageItem item = mImageList.get(mCurrentItemPosition);
-        if(mContext instanceof OnImagePageSelectedListener){
+        if (mContext instanceof OnImagePageSelectedListener) {
             boolean isSelected = false;
-            if(androidImagePicker.isSelect(mCurrentItemPosition,item) ){
+            if (androidImagePicker.isSelect(mCurrentItemPosition, item)) {
                 isSelected = true;
             }
-            ((OnImagePageSelectedListener)mContext).onImagePageSelected(mCurrentItemPosition, mImageList.get(mCurrentItemPosition), isSelected);
+            ((OnImagePageSelectedListener) mContext).onImagePageSelected(mCurrentItemPosition, mImageList.get(mCurrentItemPosition), isSelected);
         }
-        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
-            @Override
-            public void onPageSelected(int position) {
-                mCurrentItemPosition = position;
-                if(mContext instanceof OnImagePageSelectedListener){
-                    boolean isSelected = false;
-                    ImageItem item = mImageList.get(mCurrentItemPosition);
-                    if(androidImagePicker.isSelect(position,item)  ){
-                        isSelected = true;
-                    }
-                    ((OnImagePageSelectedListener)mContext).onImagePageSelected(mCurrentItemPosition,item,isSelected);
-                }
-            }
-            @Override public void onPageScrollStateChanged(int state) { }
-
-        });
+        /*=============================== 暂时注释==============================*/
+//        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) { }
+//            @Override
+//            public void onPageSelected(int position) {
+//                mCurrentItemPosition = position;
+//                if(mContext instanceof OnImagePageSelectedListener){
+//                    boolean isSelected = false;
+//                    ImageItem item = mImageList.get(mCurrentItemPosition);
+//                    if(androidImagePicker.isSelect(position,item)  ){
+//                        isSelected = true;
+//                    }
+//                    ((OnImagePageSelectedListener)mContext).onImagePageSelected(mCurrentItemPosition,item,isSelected);
+//                }
+//            }
+//            @Override public void onPageScrollStateChanged(int state) { }
+//
+//        });
 
     }
 
     /**
      * public method:select the current show image
      */
-    public void selectCurrent(boolean isCheck){
+    public void selectCurrent(boolean isCheck) {
         ImageItem item = mImageList.get(mCurrentItemPosition);
-        boolean isSelect = androidImagePicker.isSelect(mCurrentItemPosition,item);
-        if(isCheck){
-            if(!isSelect){
-                AndroidImagePicker.getInstance().addSelectedImageItem(mCurrentItemPosition,item);
+        boolean isSelect = androidImagePicker.isSelect(mCurrentItemPosition, item);
+        if (isCheck) {
+            if (!isSelect) {
+                AndroidImagePicker.getInstance().addSelectedImageItem(mCurrentItemPosition, item);
             }
-        }else{
-            if(isSelect){
+        } else {
+            if (isSelect) {
                 AndroidImagePicker.getInstance().deleteSelectedImageItem(mCurrentItemPosition, item);
             }
         }
@@ -171,34 +172,38 @@ public class ImagePreviewFragment extends Fragment {
 
             imageView = new TouchImageView(mContext);
             imageView.setBackgroundColor(0xff000000);
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
             imageView.setLayoutParams(params);
 
             imageView.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
                 @Override
                 public boolean onSingleTapConfirmed(MotionEvent e) {
                     if (enableSingleTap) {
-                        if(mContext instanceof OnImageSingleTapClickListener){
-                            ((OnImageSingleTapClickListener)mContext).onImageSingleTap(e);
+                        if (mContext instanceof OnImageSingleTapClickListener) {
+                            ((OnImageSingleTapClickListener) mContext).onImageSingleTap(e);
                         }
                     }
                     return false;
                 }
-                @Override public boolean onDoubleTapEvent(MotionEvent e) {
+
+                @Override
+                public boolean onDoubleTapEvent(MotionEvent e) {
                     return false;
                 }
-                @Override public boolean onDoubleTap(MotionEvent e) {
+
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
                     return false;
                 }
 
             });
 
-            ((UilImagePresenter)mImagePresenter).onPresentImage2(imageView, url, imageView.getWidth());//display the image with your own ImageLoader
+            ((UilImagePresenter) mImagePresenter).onPresentImage2(imageView, url, imageView.getWidth());//display the image with your own ImageLoader
 
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             return imageView;
         }
 
@@ -208,7 +213,7 @@ public class ImagePreviewFragment extends Fragment {
     /**
      * Interface for SingleTap Watching
      */
-    public interface OnImageSingleTapClickListener{
+    public interface OnImageSingleTapClickListener {
         void onImageSingleTap(MotionEvent e);
     }
 

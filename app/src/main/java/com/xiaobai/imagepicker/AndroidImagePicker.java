@@ -426,10 +426,10 @@ public class AndroidImagePicker {
         //Intent takePictureIntent = new Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA);
         takePictureIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         // Ensure that there's a camera activity to handle the intent
-        if (takePictureIntent.resolveActivity(fragment.getContext().getPackageManager()) != null) {
+        if (takePictureIntent.resolveActivity(fragment.getActivity().getPackageManager()) != null) {
             // Create the File where the photo should go
             //File photoFile = createImageFile();
-            File photoFile = createImageSaveFile(fragment.getContext());
+            File photoFile = createImageSaveFile(fragment.getActivity());
             // Continue only if the File was successfully created
             if (photoFile != null) {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));

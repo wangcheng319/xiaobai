@@ -1,14 +1,18 @@
 package com.xiaobai.activity;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.qiniu.android.http.ResponseInfo;
@@ -20,13 +24,10 @@ import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
-import com.xiaobai.adapter.PhotoEditAdapter;
 import com.xiaobai.application.R;
 import com.xiaobai.imagepicker.ImageItem;
 import com.xiaobai.utils.Utils;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,6 +36,10 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import us.pinguo.edit.sdk.PGEditActivity;
+import us.pinguo.edit.sdk.base.PGEditResult;
+import us.pinguo.edit.sdk.base.PGEditSDK;
 
 public class PhotoEditActivity extends BaseActivity {
     private Button back;
@@ -45,6 +50,7 @@ public class PhotoEditActivity extends BaseActivity {
     private List<ImageItem> imageList = new ArrayList<ImageItem>();
     private String uploadToken;
     private List<ImageView> imageViews = new ArrayList<ImageView>();
+    private ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +87,6 @@ public class PhotoEditActivity extends BaseActivity {
 
         PhotoEditAdapter adapter = new PhotoEditAdapter(imageViews);
         viewPager.setAdapter(adapter);
-
         //获取token
         getToken();
     }
@@ -163,6 +168,78 @@ public class PhotoEditActivity extends BaseActivity {
                 intent.putExtra("datas", (Serializable) imageList);
                 startActivity(intent);
                 break;
+        }
+    }
+
+    public class PhotoEditAdapter extends PagerAdapter {
+        private List<ImageView> mListViews;
+
+        public PhotoEditAdapter(List<ImageView> mListViews) {
+            this.mListViews = mListViews;//构造方法，参数是我们的页卡，这样比较方便。
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView(mListViews.get(position));//删除页卡
+        }
+
+
+        @Override
+        public Object instantiateItem(ViewGroup container, final int position) {  //这个方法用来实例化页卡
+            container.addView(mListViews.get(position), 0);//添加页卡
+            imageView = mListViews.get(position);
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //点击图片进行编辑
+                    String folderPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+                            .getAbsolutePath() + File.separator;
+                    String outFilePath = folderPath + System.currentTimeMillis() + ".jpg";
+
+                    if (imageList.get(position).path.toLowerCase().endsWith("png")) {
+                        outFilePath = outFilePath.replaceAll("jpg", "png");
+                    }
+                    PGEditSDK.instance().startEdit(PhotoEditActivity.this,PGEditActivity.class, imageList.get(position).path, outFilePath);
+
+                }
+            });
+            return mListViews.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mListViews.size();//返回页卡的数量
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            return arg0 == arg1;//官方提示这样写
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PGEditSDK.PG_EDIT_SDK_REQUEST_CODE
+                && resultCode == Activity.RESULT_OK) {
+
+            PGEditResult editResult = PGEditSDK.instance().handleEditResult(data);
+
+            imageView.setImageBitmap(editResult.getThumbNail());
+
+            Toast.makeText(this, "Photo saved to:" + editResult.getReturnPhotoPath(), Toast.LENGTH_LONG).show();
+//            enterReEditState();
+        }
+
+        if (requestCode == PGEditSDK.PG_EDIT_SDK_REQUEST_CODE
+                && resultCode == PGEditSDK.PG_EDIT_SDK_RESULT_CODE_CANCEL) {
+            Toast.makeText(this, "Edit cancelled!", Toast.LENGTH_SHORT).show();
+        }
+
+        if (requestCode == PGEditSDK.PG_EDIT_SDK_REQUEST_CODE
+                && resultCode == PGEditSDK.PG_EDIT_SDK_RESULT_CODE_NOT_CHANGED) {
+            Toast.makeText(this, "Photo do not change!", Toast.LENGTH_SHORT).show();
         }
     }
 }
