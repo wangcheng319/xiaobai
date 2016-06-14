@@ -85,7 +85,11 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@android:style/Theme.Translucent.NoTitleBar"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity android:name="com.xiaobai.activity.SettingActivity"></activity>
+        <activity android:name="com.xiaobai.activity.SettingActivity" />
+        <activity android:name="com.xiaobai.activity.PersonalInfoActivity" />
+        <activity android:name="com.xiaobai.activity.ChangePasswdActivity" />
+        <activity android:name="com.xiaobai.activity.AboutActivity" />
+        <activity android:name="com.xiaobai.activity.FeedBackActivity"></activity>
     </application>
 
 </manifest>
