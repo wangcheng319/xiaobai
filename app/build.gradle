@@ -44,5 +44,4 @@ dependencies {
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.github.frank-zhu:pullzoomview:1.0.0'
     compile files('src/main/libs/volley.jar')
-    compile project(':PG_Edit_SDK')
 }

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="E:\Download\Demo\xiaobai\Pushlib\assets"/><source path="E:\Download\Demo\xiaobai\Pushlib\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="E:\Download\Demo\xiaobai\Pushlib\build-types\release\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\Users\wangc\AndroidStudioProjects\xiaobai\Pushlib\assets"/><source path="C:\Users\wangc\AndroidStudioProjects\xiaobai\Pushlib\build\generated\assets\shaders\release"/></dataSet><dataSet config="release"><source path="C:\Users\wangc\AndroidStudioProjects\xiaobai\Pushlib\build-types\release\assets"/></dataSet></merger>

@@ -29,8 +29,6 @@ import org.json.JSONObject;
 import org.xutils.BuildConfig;
 import org.xutils.x;
 
-import us.pinguo.edit.sdk.PGEditImageLoader;
-import us.pinguo.edit.sdk.base.PGEditSDK;
 
 
 /**
@@ -63,8 +61,6 @@ public class App extends Application {
      * camera360初始化
      */
     private void setCamera360() {
-        PGEditImageLoader.initImageLoader(this);
-        PGEditSDK.instance().initSDK(this);
     }
 
 

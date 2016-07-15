@@ -37,9 +37,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import us.pinguo.edit.sdk.PGEditActivity;
-import us.pinguo.edit.sdk.base.PGEditResult;
-import us.pinguo.edit.sdk.base.PGEditSDK;
 
 public class PhotoEditActivity extends BaseActivity {
     private Button back;
@@ -199,7 +196,6 @@ public class PhotoEditActivity extends BaseActivity {
                     if (imageList.get(position).path.toLowerCase().endsWith("png")) {
                         outFilePath = outFilePath.replaceAll("jpg", "png");
                     }
-                    PGEditSDK.instance().startEdit(PhotoEditActivity.this,PGEditActivity.class, imageList.get(position).path, outFilePath);
 
                 }
             });
@@ -221,25 +217,5 @@ public class PhotoEditActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PGEditSDK.PG_EDIT_SDK_REQUEST_CODE
-                && resultCode == Activity.RESULT_OK) {
-
-            PGEditResult editResult = PGEditSDK.instance().handleEditResult(data);
-
-            imageView.setImageBitmap(editResult.getThumbNail());
-
-            Toast.makeText(this, "Photo saved to:" + editResult.getReturnPhotoPath(), Toast.LENGTH_LONG).show();
-//            enterReEditState();
-        }
-
-        if (requestCode == PGEditSDK.PG_EDIT_SDK_REQUEST_CODE
-                && resultCode == PGEditSDK.PG_EDIT_SDK_RESULT_CODE_CANCEL) {
-            Toast.makeText(this, "Edit cancelled!", Toast.LENGTH_SHORT).show();
-        }
-
-        if (requestCode == PGEditSDK.PG_EDIT_SDK_REQUEST_CODE
-                && resultCode == PGEditSDK.PG_EDIT_SDK_RESULT_CODE_NOT_CHANGED) {
-            Toast.makeText(this, "Photo do not change!", Toast.LENGTH_SHORT).show();
-        }
     }
 }
